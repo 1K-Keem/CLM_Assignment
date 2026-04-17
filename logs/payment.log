@@ -1,0 +1,137 @@
+{"level": "FATAL", "event": "app_crash", "exception": "NullPointerException", "timestamp": "2026-04-17T15:22:06.000771+00:00"}
+{"level": "INFO", "event": "payment_success", "order_id": "ORD-3838", "processing_time_ms": 634, "timestamp": "2026-04-17T15:22:06.951485+00:00"}
+{"level": "INFO", "event": "payment_init", "order_id": "ORD-1271", "amount": 130000, "method": "ShopeePay", "timestamp": "2026-04-17T15:22:07.067421+00:00"}
+{"level": "WARN", "event": "gateway_rejected", "provider": "ZaloPay", "reason": "insufficient_balance", "timestamp": "2026-04-17T15:22:07.213009+00:00"}
+{"level": "INFO", "event": "voucher_apply", "code": "FREESHIP50", "status": "success", "discount": 15000, "timestamp": "2026-04-17T15:22:07.400336+00:00"}
+{"level": "INFO", "event": "payment_init", "order_id": "ORD-2763", "amount": 47000, "method": "ZaloPay", "timestamp": "2026-04-17T15:22:08.261722+00:00"}
+{"level": "INFO", "event": "payment_init", "order_id": "ORD-1017", "amount": 117000, "method": "Momo", "timestamp": "2026-04-17T15:22:08.885250+00:00"}
+{"level": "INFO", "event": "voucher_apply", "code": "FREESHIP50", "status": "success", "discount": 15000, "timestamp": "2026-04-17T15:22:09.142599+00:00"}
+{"level": "INFO", "event": "voucher_apply", "code": "FREESHIP50", "status": "success", "discount": 15000, "timestamp": "2026-04-17T15:22:09.390963+00:00"}
+{"level": "ERROR", "event": "gateway_timeout", "provider": "VNPay", "endpoint": "/v1/create_order", "latency_ms": 5136, "timestamp": "2026-04-17T15:22:10.116155+00:00"}
+{"level": "CRITICAL", "event": "brute_force_detected", "user_id": "U-823", "reason": "multiple_failed_otp", "timestamp": "2026-04-17T15:22:10.945686+00:00"}
+{"level": "INFO", "event": "payment_init", "order_id": "ORD-1567", "amount": 124000, "method": "ZaloPay", "timestamp": "2026-04-17T15:22:11.657521+00:00"}
+{"level": "INFO", "event": "voucher_apply", "code": "FREESHIP50", "status": "success", "discount": 15000, "timestamp": "2026-04-17T15:22:11.969185+00:00"}
+{"level": "INFO", "event": "voucher_apply", "code": "FREESHIP50", "status": "success", "discount": 15000, "timestamp": "2026-04-17T15:22:12.866493+00:00"}
+{"level": "CRITICAL", "event": "brute_force_detected", "user_id": "U-510", "reason": "multiple_failed_otp", "timestamp": "2026-04-17T15:22:13.767638+00:00"}
+{"level": "ERROR", "event": "gateway_timeout", "provider": "VNPay", "endpoint": "/v1/create_order", "latency_ms": 7972, "timestamp": "2026-04-17T15:22:13.920398+00:00"}
+{"level": "INFO", "event": "payment_success", "order_id": "ORD-3602", "processing_time_ms": 678, "timestamp": "2026-04-17T15:22:14.458086+00:00"}
+{"level": "INFO", "event": "payment_init", "order_id": "ORD-5318", "amount": 96000, "method": "VNPay", "timestamp": "2026-04-17T15:22:14.890246+00:00"}
+{"level": "INFO", "event": "payment_init", "order_id": "ORD-6859", "amount": 180000, "method": "ShopeePay", "timestamp": "2026-04-17T15:22:15.324396+00:00"}
+{"level": "INFO", "event": "payment_init", "order_id": "ORD-3494", "amount": 68000, "method": "ShopeePay", "timestamp": "2026-04-17T15:22:15.575630+00:00"}
+{"level": "FATAL", "event": "app_crash", "exception": "NullPointerException", "timestamp": "2026-04-17T15:22:15.829541+00:00"}
+{"level": "INFO", "event": "voucher_apply", "code": "FREESHIP50", "status": "success", "discount": 15000, "timestamp": "2026-04-17T15:22:16.514341+00:00"}
+{"level": "INFO", "event": "payment_init", "order_id": "ORD-5343", "amount": 191000, "method": "ZaloPay", "timestamp": "2026-04-17T15:22:16.670938+00:00"}
+{"level": "INFO", "event": "voucher_apply", "code": "FREESHIP50", "status": "success", "discount": 15000, "timestamp": "2026-04-17T15:22:17.430251+00:00"}
+{"level": "ERROR", "event": "db_connection_pool", "status": "exhausted", "active_connections": 235, "timestamp": "2026-04-17T15:22:18.142179+00:00"}
+{"level": "WARN", "event": "gateway_rejected", "provider": "ShopeePay", "reason": "insufficient_balance", "timestamp": "2026-04-17T15:22:18.670581+00:00"}
+{"level": "INFO", "event": "voucher_apply", "code": "FREESHIP50", "status": "success", "discount": 15000, "timestamp": "2026-04-17T15:22:19.326964+00:00"}
+{"level": "INFO", "event": "voucher_apply", "code": "FREESHIP50", "status": "success", "discount": 15000, "timestamp": "2026-04-17T15:22:20.305747+00:00"}
+{"level": "CRITICAL", "event": "brute_force_detected", "user_id": "U-619", "reason": "multiple_failed_otp", "timestamp": "2026-04-17T15:22:21.146326+00:00"}
+{"level": "INFO", "event": "voucher_apply", "code": "FREESHIP50", "status": "success", "discount": 15000, "timestamp": "2026-04-17T15:22:21.971600+00:00"}
+{"level": "INFO", "event": "payment_init", "order_id": "ORD-6028", "amount": 117000, "method": "VNPay", "timestamp": "2026-04-17T15:22:22.925142+00:00"}
+{"level": "INFO", "event": "voucher_apply", "code": "FREESHIP50", "status": "success", "discount": 15000, "timestamp": "2026-04-17T15:22:23.795497+00:00"}
+{"level": "WARN", "event": "gateway_rejected", "provider": "ZaloPay", "reason": "insufficient_balance", "timestamp": "2026-04-17T15:22:24.551767+00:00"}
+{"level": "ERROR", "event": "db_connection_pool", "status": "exhausted", "active_connections": 200, "timestamp": "2026-04-17T15:22:25.264166+00:00"}
+{"level": "FATAL", "event": "app_crash", "exception": "NullPointerException", "timestamp": "2026-04-17T15:22:26.151513+00:00"}
+{"level": "INFO", "event": "payment_success", "order_id": "ORD-6917", "processing_time_ms": 221, "timestamp": "2026-04-17T15:22:26.283205+00:00"}
+{"level": "INFO", "event": "voucher_apply", "code": "FREESHIP50", "status": "success", "discount": 15000, "timestamp": "2026-04-17T15:22:27.250029+00:00"}
+{"level": "WARN", "event": "gateway_rejected", "provider": "ZaloPay", "reason": "insufficient_balance", "timestamp": "2026-04-17T15:22:28.209185+00:00"}
+{"level": "WARN", "event": "rate_limit_exceeded", "ip": "107.73.234.88", "requests_per_sec": 35, "timestamp": "2026-04-17T15:22:28.821744+00:00"}
+{"level": "INFO", "event": "payment_success", "order_id": "ORD-8025", "processing_time_ms": 238, "timestamp": "2026-04-17T15:22:29.251020+00:00"}
+{"level": "ERROR", "event": "gateway_timeout", "provider": "Momo", "endpoint": "/api/apply_voucher", "latency_ms": 6748, "timestamp": "2026-04-17T15:22:29.439333+00:00"}
+{"level": "INFO", "event": "voucher_apply", "code": "FREESHIP50", "status": "success", "discount": 15000, "timestamp": "2026-04-17T15:22:29.801245+00:00"}
+{"level": "ERROR", "event": "gateway_timeout", "provider": "Momo", "endpoint": "/v1/create_order", "latency_ms": 7887, "timestamp": "2026-04-17T15:22:30.328189+00:00"}
+{"level": "INFO", "event": "voucher_apply", "code": "FREESHIP50", "status": "success", "discount": 15000, "timestamp": "2026-04-17T15:22:30.681786+00:00"}
+{"level": "INFO", "event": "voucher_apply", "code": "FREESHIP50", "status": "success", "discount": 15000, "timestamp": "2026-04-17T15:22:30.945722+00:00"}
+{"level": "INFO", "event": "voucher_apply", "code": "FREESHIP50", "status": "success", "discount": 15000, "timestamp": "2026-04-17T15:22:31.178207+00:00"}
+{"level": "WARN", "event": "gateway_rejected", "provider": "ZaloPay", "reason": "insufficient_balance", "timestamp": "2026-04-17T15:22:31.601863+00:00"}
+{"level": "CRITICAL", "event": "brute_force_detected", "user_id": "U-382", "reason": "multiple_failed_otp", "timestamp": "2026-04-17T15:22:32.230174+00:00"}
+{"level": "INFO", "event": "payment_init", "order_id": "ORD-7773", "amount": 168000, "method": "ZaloPay", "timestamp": "2026-04-17T15:22:32.623601+00:00"}
+{"level": "WARN", "event": "gateway_rejected", "provider": "ZaloPay", "reason": "insufficient_balance", "timestamp": "2026-04-17T15:22:33.051091+00:00"}
+{"level": "INFO", "event": "voucher_apply", "code": "FREESHIP50", "status": "success", "discount": 15000, "timestamp": "2026-04-17T15:22:33.297114+00:00"}
+{"level": "FATAL", "event": "app_crash", "exception": "NullPointerException", "timestamp": "2026-04-17T15:22:33.922446+00:00"}
+{"level": "WARN", "event": "gateway_rejected", "provider": "ShopeePay", "reason": "insufficient_balance", "timestamp": "2026-04-17T15:22:34.692612+00:00"}
+{"level": "INFO", "event": "payment_success", "order_id": "ORD-9125", "processing_time_ms": 416, "timestamp": "2026-04-17T15:22:34.993393+00:00"}
+{"level": "WARN", "event": "rate_limit_exceeded", "ip": "145.52.149.237", "requests_per_sec": 25, "timestamp": "2026-04-17T15:22:35.523565+00:00"}
+{"level": "CRITICAL", "event": "brute_force_detected", "user_id": "U-819", "reason": "multiple_failed_otp", "timestamp": "2026-04-17T15:22:35.706645+00:00"}
+{"level": "INFO", "event": "payment_success", "order_id": "ORD-2794", "processing_time_ms": 433, "timestamp": "2026-04-17T15:22:36.030200+00:00"}
+{"level": "ERROR", "event": "db_connection_pool", "status": "exhausted", "active_connections": 214, "timestamp": "2026-04-17T15:22:36.593456+00:00"}
+{"level": "INFO", "event": "voucher_apply", "code": "FREESHIP50", "status": "success", "discount": 15000, "timestamp": "2026-04-17T15:22:37.175148+00:00"}
+{"level": "ERROR", "event": "gateway_timeout", "provider": "ZaloPay", "endpoint": "/api/apply_voucher", "latency_ms": 6933, "timestamp": "2026-04-17T15:22:37.957340+00:00"}
+{"level": "INFO", "event": "payment_success", "order_id": "ORD-3602", "processing_time_ms": 598, "timestamp": "2026-04-17T15:22:38.795672+00:00"}
+{"level": "INFO", "event": "payment_success", "order_id": "ORD-2828", "processing_time_ms": 223, "timestamp": "2026-04-17T15:22:39.067433+00:00"}
+{"level": "ERROR", "event": "gateway_timeout", "provider": "ShopeePay", "endpoint": "/api/checkout", "latency_ms": 6113, "timestamp": "2026-04-17T15:22:39.841832+00:00"}
+{"level": "INFO", "event": "payment_init", "order_id": "ORD-9454", "amount": 194000, "method": "ZaloPay", "timestamp": "2026-04-17T15:22:40.230525+00:00"}
+{"level": "INFO", "event": "payment_init", "order_id": "ORD-3089", "amount": 190000, "method": "ZaloPay", "timestamp": "2026-04-17T15:31:36.983567+00:00"}
+{"level": "INFO", "event": "payment_success", "order_id": "ORD-1480", "processing_time_ms": 677, "timestamp": "2026-04-17T15:31:37.481889+00:00"}
+{"level": "INFO", "event": "voucher_apply", "code": "FREESHIP50", "status": "success", "discount": 15000, "timestamp": "2026-04-17T15:31:38.060736+00:00"}
+{"level": "WARN", "event": "gateway_rejected", "provider": "Momo", "reason": "insufficient_balance", "timestamp": "2026-04-17T15:31:38.557479+00:00"}
+{"level": "ERROR", "event": "gateway_timeout", "provider": "VNPay", "endpoint": "/api/checkout", "latency_ms": 5412, "timestamp": "2026-04-17T15:31:39.116257+00:00"}
+{"level": "ERROR", "event": "gateway_timeout", "provider": "ZaloPay", "endpoint": "/v1/create_order", "latency_ms": 5807, "timestamp": "2026-04-17T15:31:39.531181+00:00"}
+{"level": "ERROR", "event": "gateway_timeout", "provider": "ZaloPay", "endpoint": "/api/apply_voucher", "latency_ms": 6616, "timestamp": "2026-04-17T15:31:39.962338+00:00"}
+{"level": "INFO", "event": "payment_init", "order_id": "ORD-7150", "amount": 186000, "method": "ZaloPay", "timestamp": "2026-04-17T15:31:40.374495+00:00"}
+{"level": "INFO", "event": "payment_success", "order_id": "ORD-3558", "processing_time_ms": 419, "timestamp": "2026-04-17T15:31:40.877511+00:00"}
+{"level": "ERROR", "event": "db_connection_pool", "status": "exhausted", "active_connections": 237, "timestamp": "2026-04-17T15:31:41.040656+00:00"}
+{"level": "ERROR", "event": "gateway_timeout", "provider": "ShopeePay", "endpoint": "/api/apply_voucher", "latency_ms": 6971, "timestamp": "2026-04-17T15:31:41.907434+00:00"}
+{"level": "ERROR", "event": "db_connection_pool", "status": "exhausted", "active_connections": 220, "timestamp": "2026-04-17T15:31:42.181719+00:00"}
+{"level": "INFO", "event": "payment_init", "order_id": "ORD-9249", "amount": 98000, "method": "VNPay", "timestamp": "2026-04-17T15:31:42.866449+00:00"}
+{"level": "INFO", "event": "payment_success", "order_id": "ORD-1333", "processing_time_ms": 573, "timestamp": "2026-04-17T15:40:44.282590+00:00"}
+{"level": "INFO", "event": "voucher_apply", "code": "FREESHIP50", "status": "success", "discount": 15000, "timestamp": "2026-04-17T15:40:45.083860+00:00"}
+{"level": "INFO", "event": "payment_success", "order_id": "ORD-1581", "processing_time_ms": 236, "timestamp": "2026-04-17T15:40:45.307524+00:00"}
+{"level": "INFO", "event": "payment_success", "order_id": "ORD-9716", "processing_time_ms": 407, "timestamp": "2026-04-17T15:40:45.968298+00:00"}
+{"level": "INFO", "event": "payment_init", "order_id": "ORD-7386", "amount": 168000, "method": "ShopeePay", "timestamp": "2026-04-17T15:40:46.328724+00:00"}
+{"level": "INFO", "event": "payment_success", "order_id": "ORD-4583", "processing_time_ms": 397, "timestamp": "2026-04-17T15:40:46.808067+00:00"}
+{"level": "INFO", "event": "payment_success", "order_id": "ORD-5986", "processing_time_ms": 457, "timestamp": "2026-04-17T15:40:47.474470+00:00"}
+{"level": "INFO", "event": "voucher_apply", "code": "FREESHIP50", "status": "success", "discount": 15000, "timestamp": "2026-04-17T15:40:47.908431+00:00"}
+{"level": "INFO", "event": "payment_success", "order_id": "ORD-4206", "processing_time_ms": 489, "timestamp": "2026-04-17T15:40:48.729589+00:00"}
+{"level": "INFO", "event": "voucher_apply", "code": "FREESHIP50", "status": "success", "discount": 15000, "timestamp": "2026-04-17T15:40:49.519241+00:00"}
+{"level": "CRITICAL", "event": "brute_force_detected", "user_id": "U-864", "reason": "multiple_failed_otp", "timestamp": "2026-04-17T15:40:50.245720+00:00"}
+{"level": "INFO", "event": "voucher_apply", "code": "FREESHIP50", "status": "success", "discount": 15000, "timestamp": "2026-04-17T15:40:51.171238+00:00"}
+{"level": "WARN", "event": "rate_limit_exceeded", "ip": "128.23.48.217", "requests_per_sec": 36, "timestamp": "2026-04-17T15:40:51.275615+00:00"}
+{"level": "FATAL", "event": "app_crash", "exception": "NullPointerException", "timestamp": "2026-04-17T15:40:52.183729+00:00"}
+{"level": "INFO", "event": "payment_success", "order_id": "ORD-1874", "processing_time_ms": 782, "timestamp": "2026-04-17T15:40:52.803269+00:00"}
+{"level": "INFO", "event": "voucher_apply", "code": "FREESHIP50", "status": "success", "discount": 15000, "timestamp": "2026-04-17T15:40:53.456718+00:00"}
+{"level": "INFO", "event": "payment_success", "order_id": "ORD-6363", "processing_time_ms": 717, "timestamp": "2026-04-17T15:40:54.318815+00:00"}
+{"level": "INFO", "event": "payment_init", "order_id": "ORD-8241", "amount": 196000, "method": "Momo", "timestamp": "2026-04-17T15:40:54.727213+00:00"}
+{"level": "WARN", "event": "rate_limit_exceeded", "ip": "133.33.47.97", "requests_per_sec": 29, "timestamp": "2026-04-17T15:40:55.453564+00:00"}
+{"level": "ERROR", "event": "gateway_timeout", "provider": "Momo", "endpoint": "/v1/create_order", "latency_ms": 5309, "timestamp": "2026-04-17T15:40:56.247177+00:00"}
+{"level": "WARN", "event": "gateway_rejected", "provider": "Momo", "reason": "insufficient_balance", "timestamp": "2026-04-17T15:40:56.607799+00:00"}
+{"level": "INFO", "event": "voucher_apply", "code": "FREESHIP50", "status": "success", "discount": 15000, "timestamp": "2026-04-17T15:40:57.540032+00:00"}
+{"level": "INFO", "event": "voucher_apply", "code": "FREESHIP50", "status": "success", "discount": 15000, "timestamp": "2026-04-17T15:40:58.110698+00:00"}
+{"level": "INFO", "event": "voucher_apply", "code": "FREESHIP50", "status": "success", "discount": 15000, "timestamp": "2026-04-17T15:40:58.280379+00:00"}
+{"level": "INFO", "event": "payment_success", "order_id": "ORD-3371", "processing_time_ms": 572, "timestamp": "2026-04-17T15:40:58.517903+00:00"}
+{"level": "ERROR", "event": "gateway_timeout", "provider": "Momo", "endpoint": "/v1/create_order", "latency_ms": 7003, "timestamp": "2026-04-17T15:40:58.913232+00:00"}
+{"level": "INFO", "event": "payment_success", "order_id": "ORD-3973", "processing_time_ms": 260, "timestamp": "2026-04-17T15:40:59.604592+00:00"}
+{"level": "ERROR", "event": "gateway_timeout", "provider": "ShopeePay", "endpoint": "/api/apply_voucher", "latency_ms": 7231, "timestamp": "2026-04-17T15:41:00.513952+00:00"}
+{"level": "ERROR", "event": "gateway_timeout", "provider": "ShopeePay", "endpoint": "/v1/create_order", "latency_ms": 7671, "timestamp": "2026-04-17T15:41:00.635319+00:00"}
+{"level": "WARN", "event": "rate_limit_exceeded", "ip": "195.50.216.155", "requests_per_sec": 28, "timestamp": "2026-04-17T15:41:00.981272+00:00"}
+{"level": "WARN", "event": "gateway_rejected", "provider": "VNPay", "reason": "insufficient_balance", "timestamp": "2026-04-17T15:41:01.568459+00:00"}
+{"level": "ERROR", "event": "db_connection_pool", "status": "exhausted", "active_connections": 223, "timestamp": "2026-04-17T15:41:02.021065+00:00"}
+{"level": "INFO", "event": "payment_success", "order_id": "ORD-8138", "processing_time_ms": 722, "timestamp": "2026-04-17T15:41:02.969032+00:00"}
+{"level": "INFO", "event": "payment_success", "order_id": "ORD-4146", "processing_time_ms": 250, "timestamp": "2026-04-17T15:41:03.290250+00:00"}
+{"level": "INFO", "event": "payment_success", "order_id": "ORD-8154", "processing_time_ms": 221, "timestamp": "2026-04-17T15:41:04.105258+00:00"}
+{"level": "ERROR", "event": "gateway_timeout", "provider": "ShopeePay", "endpoint": "/api/apply_voucher", "latency_ms": 6428, "timestamp": "2026-04-17T15:41:04.564917+00:00"}
+{"level": "INFO", "event": "payment_success", "order_id": "ORD-5690", "processing_time_ms": 364, "timestamp": "2026-04-17T15:41:05.387876+00:00"}
+{"level": "INFO", "event": "payment_init", "order_id": "ORD-2012", "amount": 156000, "method": "Momo", "timestamp": "2026-04-17T15:41:06.134132+00:00"}
+{"level": "INFO", "event": "payment_init", "order_id": "ORD-7652", "amount": 181000, "method": "ZaloPay", "timestamp": "2026-04-17T15:41:06.499521+00:00"}
+{"level": "INFO", "event": "voucher_apply", "code": "FREESHIP50", "status": "success", "discount": 15000, "timestamp": "2026-04-17T15:41:06.796166+00:00"}
+{"level": "INFO", "event": "payment_init", "order_id": "ORD-5668", "amount": 86000, "method": "VNPay", "timestamp": "2026-04-17T15:41:07.774833+00:00"}
+{"level": "CRITICAL", "event": "brute_force_detected", "user_id": "U-661", "reason": "multiple_failed_otp", "timestamp": "2026-04-17T15:41:08.480392+00:00"}
+{"level": "INFO", "event": "payment_success", "order_id": "ORD-9921", "processing_time_ms": 556, "timestamp": "2026-04-17T15:41:08.922874+00:00"}
+{"level": "INFO", "event": "payment_init", "order_id": "ORD-7757", "amount": 158000, "method": "Momo", "timestamp": "2026-04-17T15:41:09.069939+00:00"}
+{"level": "INFO", "event": "voucher_apply", "code": "FREESHIP50", "status": "success", "discount": 15000, "timestamp": "2026-04-17T15:41:09.652724+00:00"}
+{"level": "CRITICAL", "event": "brute_force_detected", "user_id": "U-991", "reason": "multiple_failed_otp", "timestamp": "2026-04-17T15:41:10.483145+00:00"}
+{"level": "INFO", "event": "voucher_apply", "code": "FREESHIP50", "status": "success", "discount": 15000, "timestamp": "2026-04-17T15:41:10.641635+00:00"}
+{"level": "INFO", "event": "payment_init", "order_id": "ORD-2730", "amount": 82000, "method": "VNPay", "timestamp": "2026-04-17T15:41:11.539868+00:00"}
+{"level": "INFO", "event": "payment_success", "order_id": "ORD-1425", "processing_time_ms": 698, "timestamp": "2026-04-17T15:41:12.030108+00:00"}
+{"level": "FATAL", "event": "app_crash", "exception": "NullPointerException", "timestamp": "2026-04-17T15:41:12.966348+00:00"}
+{"level": "INFO", "event": "payment_success", "order_id": "ORD-4536", "processing_time_ms": 431, "timestamp": "2026-04-17T15:41:13.537127+00:00"}
+{"level": "ERROR", "event": "gateway_timeout", "provider": "ShopeePay", "endpoint": "/v1/create_order", "latency_ms": 6370, "timestamp": "2026-04-17T15:41:13.705169+00:00"}
+{"level": "INFO", "event": "payment_success", "order_id": "ORD-2315", "processing_time_ms": 459, "timestamp": "2026-04-17T15:41:14.324096+00:00"}
+{"level": "FATAL", "event": "app_crash", "exception": "NullPointerException", "timestamp": "2026-04-17T15:41:14.581892+00:00"}
+{"level": "INFO", "event": "payment_init", "order_id": "ORD-5331", "amount": 136000, "method": "ZaloPay", "timestamp": "2026-04-17T15:41:15.055330+00:00"}
+{"level": "INFO", "event": "payment_init", "order_id": "ORD-8271", "amount": 137000, "method": "VNPay", "timestamp": "2026-04-17T15:41:15.316682+00:00"}
+{"level": "ERROR", "event": "db_connection_pool", "status": "exhausted", "active_connections": 203, "timestamp": "2026-04-17T15:41:15.871600+00:00"}
+{"level": "INFO", "event": "payment_success", "order_id": "ORD-7694", "processing_time_ms": 291, "timestamp": "2026-04-17T15:41:16.386821+00:00"}
+{"level": "INFO", "event": "voucher_apply", "code": "FREESHIP50", "status": "success", "discount": 15000, "timestamp": "2026-04-17T15:41:17.208491+00:00"}
+{"level": "INFO", "event": "payment_success", "order_id": "ORD-1455", "processing_time_ms": 603, "timestamp": "2026-04-17T15:41:18.124138+00:00"}

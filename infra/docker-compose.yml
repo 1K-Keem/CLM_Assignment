@@ -8,7 +8,7 @@ services:
       - "3100:3100"
     command: -config.file=/etc/loki/local-config.yaml
     volumes:
-      - ./loki-config.yaml:/etc/loki/local-config.yaml
+      - ./loki/loki-config.yaml:/etc/loki/local-config.yaml
     networks:
       - loki-network
 
@@ -17,8 +17,8 @@ services:
     ports:
       - "11111:11111"
     volumes:
-      - ./config.alloy:/etc/alloy/config.alloy
-      - ../log/payment.log:/var/log/payment.log
+      - ./alloy/config.alloy:/etc/alloy/config.alloy
+      - ../logs/payment.log:/var/log/payment.log
     command: run --server.http.listen-addr=0.0.0.0:11111 /etc/alloy/config.alloy
     networks:
       - loki-network

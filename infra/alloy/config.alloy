@@ -1,10 +1,51 @@
+local.file_match "movie_app_logs" {
+    path_targets = [
+        {
+            "__path__" = "/var/log/movie-ticket/app.log",
+            "job"      = "movie_ticket",
+            "service"  = "movie-ticket-web",
+            "log_type" = "app",
+            "env"      = "development",
+        },
+        {
+            "__path__" = "/var/log/movie-ticket/auth.log",
+            "job"      = "movie_ticket",
+            "service"  = "movie-ticket-web",
+            "log_type" = "auth",
+            "env"      = "development",
+        },
+        {
+            "__path__" = "/var/log/movie-ticket/booking.log",
+            "job"      = "movie_ticket",
+            "service"  = "movie-ticket-web",
+            "log_type" = "booking",
+            "env"      = "development",
+        },
+        {
+            "__path__" = "/var/log/movie-ticket/error.log",
+            "job"      = "movie_ticket",
+            "service"  = "movie-ticket-web",
+            "log_type" = "error",
+            "env"      = "development",
+        },
+    ]
+}
+
+loki.source.file "movie_app_scraper" {
+    targets    = local.file_match.movie_app_logs.targets
+    forward_to = [loki.write.local_loki.receiver]
+}
+
 local.file_match "payment_logs" {
     path_targets = [{
         "__path__" = "/var/log/payment.log",
         "job"      = "payment_gateway",
+        "service"  = "payment_gateway",
+        "log_type" = "payment",
         "env"      = "development",
     }]
 }
+
 loki.source.file "payment_scraper" {
     targets    = local.file_match.payment_logs.targets
     forward_to = [loki.write.local_loki.receiver]

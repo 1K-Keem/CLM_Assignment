@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Đăng nhập · CLM Cinema{% endblock %}
+
+{% block content %}
+<section class="auth-layout">
+  <div class="auth-copy">
+    <p class="eyebrow">Tài khoản demo</p>
+    <h1>Đăng nhập để giữ ghế và đặt vé.</h1>
+    <p class="summary">Dùng tài khoản khách hoặc quản trị để tạo log xác thực, booking và admin cho pipeline Alloy → Loki → Grafana.</p>
+    <div class="credential-box">
+      <span>Khách: user@example.com / demo123</span>
+      <span>Quản trị: admin@example.com / admin123</span>
+      <span>Khoá: locked@example.com / locked123</span>
+    </div>
+  </div>
+  <form class="form-panel auth-form" action="/login" method="post">
+    <h2>Đăng nhập</h2>
+    <label>
+      <span>Email</span>
+      <input name="username" type="email" value="user@example.com" required>
+    </label>
+    <label>
+      <span>Mật khẩu</span>
+      <input name="password" type="password" required>
+    </label>
+    <button class="button primary full" type="submit">Đăng nhập</button>
+  </form>
+</section>
+{% endblock %}

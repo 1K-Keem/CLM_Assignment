@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block title %}CLM Cinema · Đặt vé phim Việt{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <div class="hero-copy">
+    <p class="eyebrow">Rạp phim Việt Nam</p>
+    <h1>Chọn phim hay, giữ ghế đẹp, đặt vé trong vài bước.</h1>
+    <p class="summary">
+      Trải nghiệm đặt vé mô phỏng cho các phim Việt nổi bật, lịch chiếu linh hoạt, combo bắp nước và log quan sát đầy đủ cho bài assignment.
+    </p>
+    <div class="hero-actions">
+      <a class="button primary" href="/movies">Đặt vé ngay</a>
+      {% if showtimes %}
+      <a class="button ghost" href="/showtimes/{{ showtimes[0]['id'] }}/seats">Chọn suất gần nhất</a>
+      {% endif %}
+    </div>
+    <div class="hero-metrics">
+      <span><strong>{{ movies|length }}</strong> phim nổi bật</span>
+      <span><strong>{{ showtimes|length }}</strong> suất chiếu nhanh</span>
+      <span><strong>5</strong> combo rạp phim</span>
+    </div>
+  </div>
+  {% set hero_showtime = (showtimes | selectattr("movie_title", "equalto", "Titanic") | list | first) if showtimes else None %}
+  {% set hero_showtime = hero_showtime if hero_showtime else (showtimes[0] if showtimes else None) %}
+  {% set hero_movie = (movies | selectattr("title", "equalto", hero_showtime["movie_title"]) | list | first) if hero_showtime else None %}
+  <div class="hero-ticket {% if hero_movie and hero_movie['poster_url'] %}has-image{% endif %}" aria-label="Suất chiếu nổi bật">
+    {% if hero_movie and hero_movie["poster_url"] %}
+    <span class="ticket-poster" style="background-image: url('{{ hero_movie['poster_url'] }}');"></span>
+    {% endif %}
+    {% if hero_showtime %}
+    <span class="ticket-label">Suất chiếu nổi bật</span>
+    <strong>{{ hero_showtime["movie_title"] }}</strong>
+    <span>{{ hero_showtime["format"] }} · {{ hero_showtime["screen_name"] }}</span>
+    <span>{{ hero_showtime["starts_at"]|replace("T", " ") }}</span>
+    <a class="button primary full" href="/showtimes/{{ hero_showtime['id'] }}/seats">Chọn ghế</a>
+    {% else %}
+    <span class="ticket-label">Chưa có lịch chiếu</span>
+    <strong>Lịch chiếu đang cập nhật</strong>
+    <span>Vui lòng quay lại sau</span>
+    {% endif %}
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">Phim nổi bật</p>
+      <h2>Phim đang chiếu</h2>
+    </div>
+    <a href="/movies">Xem tất cả</a>
+  </div>
+  {% if movies %}
+  <div class="movie-grid">
+    {% for movie in movies %}
+    {% include "partials/movie_card.html" %}
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-state">Chưa có phim nổi bật. Hãy chạy seed dữ liệu và tải lại trang.</div>
+  {% endif %}
+</section>
+
+<section class="section split-section">
+  <div>
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">Lịch chiếu nhanh</p>
+        <h2>Suất chiếu gần nhất</h2>
+      </div>
+    </div>
+    {% if showtimes %}
+    <div class="showtime-strip">
+      {% for showtime in showtimes %}
+      <a class="showtime-chip" href="/showtimes/{{ showtime['id'] }}/seats">
+        <strong>{{ showtime["starts_at"]|replace("T", " ") }}</strong>
+        <span>{{ showtime["movie_title"] }}</span>
+        <em>{{ showtime["format"] }} · {{ showtime["screen_name"] }}</em>
+      </a>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">Chưa có suất chiếu nào.</div>
+    {% endif %}
+  </div>
+
+  <aside class="promo-panel">
+    <p class="eyebrow">Combo bắp nước</p>
+    <h2>Thêm vị cho buổi xem phim</h2>
+    <p>Chọn bắp, nước, nachos hoặc combo ngay khi giữ ghế. Tổng thanh toán cập nhật tức thì.</p>
+    <div class="combo-tags">
+      <span>Bắp rang</span>
+      <span>Coke</span>
+      <span>Combo đôi</span>
+      <span>Nachos</span>
+    </div>
+  </aside>
+</section>
+
+<section class="section">
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">Quy trình</p>
+      <h2>Đặt vé trong 4 bước</h2>
+    </div>
+  </div>
+  <div class="steps-grid">
+    <div><span>01</span><strong>Chọn phim</strong><p>Xem phim đang chiếu và chọn phim bạn muốn.</p></div>
+    <div><span>02</span><strong>Chọn suất chiếu</strong><p>Chọn rạp, định dạng và giờ chiếu phù hợp.</p></div>
+    <div><span>03</span><strong>Chọn ghế</strong><p>Giữ ghế tạm thời trước khi xác nhận.</p></div>
+    <div><span>04</span><strong>Xác nhận vé</strong><p>Hoàn tất đặt vé và theo dõi log booking.</p></div>
+  </div>
+</section>
+{% endblock %}

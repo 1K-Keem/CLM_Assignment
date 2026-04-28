@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}{{ status_code }} · CLM Cinema{% endblock %}
+
+{% block content %}
+<section class="page-heading error-heading">
+  <p class="eyebrow">Lỗi {{ status_code }}</p>
+  <h1>{{ message }}</h1>
+  <p class="summary">Trang này vẫn được giữ trong demo để tạo request log, auth log và error state rõ ràng.</p>
+  <a class="button primary" href="/">Về trang chủ</a>
+</section>
+{% endblock %}

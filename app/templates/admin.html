@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Quản trị · CLM Cinema{% endblock %}
+
+{% block content %}
+<section class="page-heading">
+  <p class="eyebrow">Bảng điều hành</p>
+  <h1>Quản trị rạp phim</h1>
+  <p class="summary">Theo dõi nhanh dữ liệu demo và kích hoạt các sự kiện admin để kiểm tra log.</p>
+</section>
+
+<section class="section stats-grid">
+  <div class="summary-panel"><span class="label">Phim</span><strong>{{ stats["movies"] }}</strong></div>
+  <div class="summary-panel"><span class="label">Suất chiếu</span><strong>{{ stats["showtimes"] }}</strong></div>
+  <div class="summary-panel"><span class="label">Đặt vé</span><strong>{{ stats["bookings"] }}</strong></div>
+  <div class="summary-panel"><span class="label">Doanh thu</span><strong>{{ "{:,.0f}".format(stats["revenue"]).replace(",", ".") }}đ</strong></div>
+</section>
+
+<section class="section booking-layout">
+  <div class="summary-panel">
+    <h2>Hành động demo</h2>
+    <div class="admin-actions">
+      {% for event in ["movie_created", "movie_updated", "movie_deleted", "showtime_created", "showtime_updated", "showtime_deleted", "pricing_updated", "seatmap_updated", "manual_booking_created", "manual_booking_canceled"] %}
+      <form action="/admin/actions/{{ event }}" method="post">
+        <button class="button ghost full" type="submit">{{ event }}</button>
+      </form>
+      {% endfor %}
+    </div>
+  </div>
+  <aside class="summary-panel">
+    <h2>Vé gần đây</h2>
+    {% if stats["recent"] %}
+      {% for booking in stats["recent"] %}
+      <div class="summary-line">
+        <span>#{{ booking["id"] }} · {{ booking["movie_title"] }}</span>
+        <strong>{{ booking["status"] }}</strong>
+      </div>
+      {% endfor %}
+    {% else %}
+      <div class="empty-state">Chưa có vé nào.</div>
+    {% endif %}
+  </aside>
+</section>
+{% endblock %}

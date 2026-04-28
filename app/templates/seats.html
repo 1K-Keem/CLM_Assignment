@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}Chọn ghế · CLM Cinema{% endblock %}
+
+{% block content %}
+<section class="page-heading seat-heading">
+  <p class="eyebrow">{{ showtime["format"] }} · {{ showtime["screen_name"] }}</p>
+  <h1>{{ showtime["movie_title"] }}</h1>
+  <p class="summary">{{ showtime["starts_at"]|replace("T", " ") }} · {{ showtime["genre"] }} · {{ showtime["duration_minutes"] }} phút</p>
+</section>
+
+<section class="section booking-layout">
+  <div class="seat-workspace">
+    <div class="screen">Màn hình</div>
+    <div class="booking-alert" data-booking-alert></div>
+    {% if seats %}
+    <div class="seat-map" data-showtime-id="{{ showtime['id'] }}">
+      {% for seat in seats %}
+      {% set locked = seat["status"] in ["booked", "held"] %}
+      <button
+        class="seat {{ seat['status'] }} {% if seat['seat_type'] == 'vip' %}vip{% endif %}"
+        type="button"
+        data-seat="{{ seat['seat_code'] }}"
+        data-status="{{ seat['status'] }}"
+        data-price="{{ showtime['price_vnd'] + (30000 if seat['seat_type'] == 'vip' else 0) }}"
+        {% if locked %}disabled{% endif %}
+      >
+        {{ seat["seat_code"] }}
+      </button>
+      {% endfor %}
+    </div>
+    <div class="legend">
+      <span><i class="legend-box"></i>Ghế trống</span>
+      <span><i class="legend-box vip"></i>Ghế VIP</span>
+      <span><i class="legend-box held"></i>Ghế đang giữ</span>
+      <span><i class="legend-box booked"></i>Ghế đã đặt</span>
+      <span><i class="legend-box selected"></i>Ghế đang chọn</span>
+    </div>
+    {% else %}
+    <div class="empty-state">Phòng chiếu này chưa có sơ đồ ghế.</div>
+    {% endif %}
+  </div>
+
+  <aside class="summary-panel booking-summary">
+    <p class="eyebrow">Thông tin đặt vé</p>
+    <h2>Vé của tôi</h2>
+    <div class="summary-line">
+      <span>Phim</span>
+      <strong>{{ showtime["movie_title"] }}</strong>
+    </div>
+    <div class="summary-line">
+      <span>Suất chiếu</span>
+      <strong>{{ showtime["starts_at"]|replace("T", " ") }}</strong>
+    </div>
+    <div class="summary-line">
+      <span>Phòng chiếu</span>
+      <strong>{{ showtime["screen_name"] }}</strong>
+    </div>
+    <div class="summary-line">
+      <span>Định dạng</span>
+      <strong>{{ showtime["format"] }}</strong>
+    </div>
+    <div class="summary-line">
+      <span>Giá vé cơ bản</span>
+      <strong>{{ "{:,.0f}".format(showtime["price_vnd"]).replace(",", ".") }}đ</strong>
+    </div>
+    <div class="selected-seats" data-selected-seats>Chưa chọn ghế</div>
+
+    <div class="addons">
+      <h3>Combo bắp nước</h3>
+      {% for addon in addons %}
+      <label class="addon">
+        <input type="checkbox" value="{{ addon['key'] }}" data-addon-price="{{ addon['price_vnd'] }}">
+        <span>{{ addon["name"] }}</span>
+        <strong>{{ "{:,.0f}".format(addon["price_vnd"]).replace(",", ".") }}đ</strong>
+      </label>
+      {% endfor %}
+    </div>
+
+    <div class="total-line">
+      <span>Tổng thanh toán</span>
+      <strong data-total>0đ</strong>
+    </div>
+    {% if current_user %}
+    <button class="button primary full" type="button" disabled data-hold>Tạm giữ ghế</button>
+    <button class="button ghost full" type="button" disabled data-confirm>Xác nhận đặt vé</button>
+    {% else %}
+    <a class="button primary full" href="/login">Đăng nhập để đặt vé</a>
+    {% endif %}
+  </aside>
+</section>
+{% endblock %}

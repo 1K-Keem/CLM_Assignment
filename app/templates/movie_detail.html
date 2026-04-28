@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}{{ movie["title"] }} · CLM Cinema{% endblock %}
+
+{% block content %}
+<section
+  class="movie-detail-showcase {% if movie['backdrop_url'] %}detail-hero-image{% endif %}"
+  {% if movie["backdrop_url"] %}style="background-image: linear-gradient(90deg, rgba(10, 8, 7, 0.94), rgba(10, 8, 7, 0.66)), url('{{ movie['backdrop_url'] }}');"{% endif %}
+>
+  <div
+    class="poster detail-poster theme-{{ movie['visual_theme'] }} {% if movie['poster_url'] %}poster-with-image{% endif %}"
+  >
+    {% if movie["poster_url"] %}
+    <span class="poster-blur" style="background-image: url('{{ movie['poster_url'] }}');"></span>
+    <img src="{{ movie['poster_url'] }}" alt="Bìa phim {{ movie['title'] }}" loading="lazy">
+    {% endif %}
+    <span>{{ movie["rating"] }}</span>
+    <strong>{{ movie["title"] }}</strong>
+  </div>
+
+  <div class="movie-detail-info">
+    <p class="eyebrow">Phim đang chiếu</p>
+    <h1>{{ movie["title"] }}</h1>
+    <div class="movie-facts">
+      <span>{{ movie["genre"] }}</span>
+      <span>{{ movie["duration_minutes"] }} phút</span>
+      <span>{{ movie["rating"] }}</span>
+      {% if showtimes %}
+      <span>{{ showtimes|length }} suất chiếu</span>
+      {% endif %}
+    </div>
+    <p class="summary">{{ movie["synopsis"] }}</p>
+    <div class="detail-actions">
+      {% if showtimes %}
+      <a class="button primary" href="/showtimes/{{ showtimes[0]['id'] }}/seats">Đặt vé suất gần nhất</a>
+      {% endif %}
+      <a class="button ghost" href="#lich-chieu">Xem lịch chiếu</a>
+    </div>
+  </div>
+</section>
+
+<section class="section movie-info-grid">
+  <article class="movie-info-card wide">
+    <p class="eyebrow">Nội dung phim</p>
+    <h2>Tóm tắt</h2>
+    <p>{{ movie["synopsis"] }}</p>
+  </article>
+  <article class="movie-info-card">
+    <p class="eyebrow">Diễn viên</p>
+    <h2>Dàn cast</h2>
+    <p>{{ movie["cast"] }}</p>
+  </article>
+  <article class="movie-info-card">
+    <p class="eyebrow">Phân loại</p>
+    <h2>{{ movie["rating"] }}</h2>
+    <p>Vui lòng kiểm tra quy định độ tuổi tại quầy trước khi vào rạp.</p>
+  </article>
+</section>
+
+<section class="section booking-layout" id="lich-chieu">
+  <div>
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">Lịch chiếu</p>
+        <h2>Chọn rạp và suất chiếu</h2>
+      </div>
+    </div>
+    {% if showtimes %}
+    <div class="showtime-list premium-showtimes">
+      {% for showtime in showtimes %}
+      <a class="showtime-row" href="/showtimes/{{ showtime['id'] }}/seats">
+        <span class="format-badge">{{ showtime["format"] }}</span>
+        <div>
+          <strong>{{ showtime["starts_at"]|replace("T", " ") }}</strong>
+          <span>{{ showtime["screen_name"] }}</span>
+          <em>{{ showtime["format_label"] }} · {{ showtime["language"] }}</em>
+        </div>
+        <span>{{ "{:,.0f}".format(showtime["price_vnd"]).replace(",", ".") }}đ</span>
+      </a>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">Phim này chưa có lịch chiếu.</div>
+    {% endif %}
+  </div>
+
+  <aside class="summary-panel price-panel">
+    <p class="eyebrow">Bảng giá</p>
+    <h2>Định dạng vé</h2>
+    {% for price in prices %}
+    <div class="summary-line">
+      <span>{{ price["format"] }}</span>
+      <strong>{{ "{:,.0f}".format(price["price_vnd"]).replace(",", ".") }}đ</strong>
+    </div>
+    {% endfor %}
+  </aside>
+</section>
+{% endblock %}

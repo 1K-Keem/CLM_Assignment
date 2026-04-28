@@ -18,6 +18,10 @@ services:
       - "11111:11111"
     volumes:
       - ./alloy/config.alloy:/etc/alloy/config.alloy
+      - ../logs/app.log:/var/log/movie-ticket/app.log
+      - ../logs/auth.log:/var/log/movie-ticket/auth.log
+      - ../logs/booking.log:/var/log/movie-ticket/booking.log
+      - ../logs/error.log:/var/log/movie-ticket/error.log
       - ../logs/payment.log:/var/log/payment.log
     command: run --server.http.listen-addr=0.0.0.0:11111 /etc/alloy/config.alloy
     networks:
@@ -26,7 +30,7 @@ services:
       - loki
 
   grafana:
-    image: grafana/grafana:13.0.0
+    image: grafana/grafana:latest
     ports:
       - "3000:3000"
     networks:

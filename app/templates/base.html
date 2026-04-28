@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Rạp Phim CLM{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/styles.css') }}">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="/">
+        <span class="brand-mark">CLM</span>
+        <span>
+          <strong>CLM Cinema</strong>
+          <small>Đặt vé phim Việt</small>
+        </span>
+      </a>
+      <nav class="nav-links" aria-label="Điều hướng chính">
+        <a href="/">Trang chủ</a>
+        <a href="/movies">Phim đang chiếu</a>
+        {% if current_user and current_user["role"] == "admin" %}
+        <a href="/admin">Quản trị</a>
+        {% endif %}
+        {% if current_user %}
+        <form action="/logout" method="post">
+          <button class="nav-button" type="submit">Đăng xuất</button>
+        </form>
+        {% else %}
+        <a class="nav-pill" href="/login">Đăng nhập</a>
+        {% endif %}
+      </nav>
+    </header>
+    <main>
+      {% block content %}{% endblock %}
+    </main>
+    <script src="{{ url_for('static', path='/app.js') }}"></script>
+  </body>
+</html>

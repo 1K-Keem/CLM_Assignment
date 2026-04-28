@@ -1,0 +1,25 @@
+<article class="movie-card">
+  <a class="poster theme-{{ movie['visual_theme'] }} {% if movie['poster_url'] %}poster-with-image{% endif %}" href="/movies/{{ movie['id'] }}" aria-label="Xem chi tiết {{ movie['title'] }}">
+    {% if movie["poster_url"] %}
+    <span class="poster-blur" style="background-image: url('{{ movie['poster_url'] }}');"></span>
+    <img src="{{ movie['poster_url'] }}" alt="Bìa phim {{ movie['title'] }}" loading="lazy">
+    {% endif %}
+    <span>{{ movie["rating"] }}</span>
+    <strong>{{ movie["title"] }}</strong>
+  </a>
+  <div class="movie-card-body">
+    <div>
+      <h3>{{ movie["title"] }}</h3>
+      <p>{{ movie["genre"] }} · {{ movie["duration_minutes"] }} phút</p>
+      <div class="format-tags">
+        <span>2D</span>
+        <span>VIP</span>
+        <span>IMAX</span>
+      </div>
+    </div>
+    <div class="card-actions">
+      <a class="button ghost small" href="/movies/{{ movie['id'] }}">Xem chi tiết</a>
+      <a class="button primary small" href="/movies/{{ movie['id'] }}">Đặt vé</a>
+    </div>
+  </div>
+</article>

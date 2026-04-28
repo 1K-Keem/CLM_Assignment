@@ -1,31 +1,32 @@
 {% extends "base.html" %}
 
-{% block title %}Booking #{{ booking["id"] }} · Movie Ticket Web{% endblock %}
+{% block title %}Vé #{{ booking["id"] }} · CLM Cinema{% endblock %}
 
 {% block content %}
 <section class="page-heading">
-  <p class="eyebrow">Booking {{ booking["status"] }}</p>
+  <p class="eyebrow">Vé {{ booking["status"] }}</p>
   <h1>{{ booking["movie_title"] }}</h1>
   <p class="summary">{{ booking["format"] }} · {{ booking["screen_name"] }} · {{ booking["starts_at"]|replace("T", " ") }}</p>
 </section>
 
 <section class="section booking-layout">
-  <div class="summary-panel">
-    <h2>Seats</h2>
+  <div class="summary-panel ticket-panel">
+    <p class="eyebrow">Vé của tôi</p>
+    <h2>Mã vé #{{ booking["id"] }}</h2>
     <div class="selected-seats">{{ seats|join(", ") }}</div>
     <div class="summary-line">
-      <span>Total</span>
-      <strong>{{ "{:,.0f}".format(booking["amount"]) }} {{ booking["currency"] }}</strong>
+      <span>Tổng thanh toán</span>
+      <strong>{{ "{:,.0f}".format(booking["amount"]).replace(",", ".") }}đ</strong>
     </div>
   </div>
   <aside class="summary-panel">
-    <p class="eyebrow">Actions</p>
+    <p class="eyebrow">Thao tác</p>
     {% if booking["status"] != "canceled" %}
     <form action="/bookings/{{ booking['id'] }}/cancel" method="post">
-      <button class="button ghost full" type="submit">Cancel booking</button>
+      <button class="button ghost full" type="submit">Huỷ vé</button>
     </form>
     {% else %}
-    <div class="empty-state">This booking has been canceled and seats were released.</div>
+    <div class="empty-state">Vé này đã được huỷ và ghế đã được mở lại.</div>
     {% endif %}
   </aside>
 </section>

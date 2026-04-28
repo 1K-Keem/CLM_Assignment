@@ -1,32 +1,38 @@
 {% extends "base.html" %}
 
-{% block title %}Movie Ticket Web{% endblock %}
+{% block title %}CLM Cinema · Đặt vé phim Việt{% endblock %}
 
 {% block content %}
 <section class="hero">
   <div class="hero-copy">
-    <p class="eyebrow">Now showing</p>
-    <h1>Book the next great cinema night.</h1>
+    <p class="eyebrow">Rạp phim Việt Nam</p>
+    <h1>Chọn phim hay, giữ ghế đẹp, đặt vé trong vài bước.</h1>
     <p class="summary">
-      Browse featured movies, pick a format, choose seats, and prepare an order with snacks.
+      Trải nghiệm đặt vé mô phỏng cho các phim Việt nổi bật, lịch chiếu linh hoạt, combo bắp nước và log quan sát đầy đủ cho bài assignment.
     </p>
     <div class="hero-actions">
-      <a class="button primary" href="/movies">View movies</a>
+      <a class="button primary" href="/movies">Đặt vé ngay</a>
       {% if showtimes %}
-      <a class="button ghost" href="/showtimes/{{ showtimes[0]['id'] }}/seats">Start booking</a>
+      <a class="button ghost" href="/showtimes/{{ showtimes[0]['id'] }}/seats">Chọn suất gần nhất</a>
       {% endif %}
     </div>
+    <div class="hero-metrics">
+      <span><strong>{{ movies|length }}</strong> phim nổi bật</span>
+      <span><strong>{{ showtimes|length }}</strong> suất chiếu nhanh</span>
+      <span><strong>5</strong> combo rạp phim</span>
+    </div>
   </div>
-  <div class="hero-ticket" aria-label="Featured showtime">
+  <div class="hero-ticket" aria-label="Suất chiếu nổi bật">
     {% if showtimes %}
-    <span class="ticket-label">Next show</span>
+    <span class="ticket-label">Suất chiếu nổi bật</span>
     <strong>{{ showtimes[0]["movie_title"] }}</strong>
     <span>{{ showtimes[0]["format"] }} · {{ showtimes[0]["screen_name"] }}</span>
     <span>{{ showtimes[0]["starts_at"]|replace("T", " ") }}</span>
+    <a class="button primary full" href="/showtimes/{{ showtimes[0]['id'] }}/seats">Chọn ghế</a>
     {% else %}
-    <span class="ticket-label">No showtimes</span>
-    <strong>Schedule coming soon</strong>
-    <span>Check back later</span>
+    <span class="ticket-label">Chưa có lịch chiếu</span>
+    <strong>Lịch chiếu đang cập nhật</strong>
+    <span>Vui lòng quay lại sau</span>
     {% endif %}
   </div>
 </section>
@@ -34,10 +40,10 @@
 <section class="section">
   <div class="section-heading">
     <div>
-      <p class="eyebrow">Featured</p>
-      <h2>Today at CLM Cinema</h2>
+      <p class="eyebrow">Phim nổi bật</p>
+      <h2>Phim đang chiếu</h2>
     </div>
-    <a href="/movies">All movies</a>
+    <a href="/movies">Xem tất cả</a>
   </div>
   {% if movies %}
   <div class="movie-grid">
@@ -46,28 +52,58 @@
     {% endfor %}
   </div>
   {% else %}
-  <div class="empty-state">No featured movies are available yet.</div>
+  <div class="empty-state">Chưa có phim nổi bật. Hãy chạy seed dữ liệu và tải lại trang.</div>
   {% endif %}
 </section>
 
-<section class="section compact">
+<section class="section split-section">
+  <div>
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">Lịch chiếu nhanh</p>
+        <h2>Suất chiếu gần nhất</h2>
+      </div>
+    </div>
+    {% if showtimes %}
+    <div class="showtime-strip">
+      {% for showtime in showtimes %}
+      <a class="showtime-chip" href="/showtimes/{{ showtime['id'] }}/seats">
+        <strong>{{ showtime["starts_at"]|replace("T", " ") }}</strong>
+        <span>{{ showtime["movie_title"] }}</span>
+        <em>{{ showtime["format"] }} · {{ showtime["screen_name"] }}</em>
+      </a>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">Chưa có suất chiếu nào.</div>
+    {% endif %}
+  </div>
+
+  <aside class="promo-panel">
+    <p class="eyebrow">Combo bắp nước</p>
+    <h2>Thêm vị cho buổi xem phim</h2>
+    <p>Chọn bắp, nước, nachos hoặc combo ngay khi giữ ghế. Tổng thanh toán cập nhật tức thì.</p>
+    <div class="combo-tags">
+      <span>Bắp rang</span>
+      <span>Coke</span>
+      <span>Combo đôi</span>
+      <span>Nachos</span>
+    </div>
+  </aside>
+</section>
+
+<section class="section">
   <div class="section-heading">
     <div>
-      <p class="eyebrow">Fast picks</p>
-      <h2>Upcoming showtimes</h2>
+      <p class="eyebrow">Quy trình</p>
+      <h2>Đặt vé trong 4 bước</h2>
     </div>
   </div>
-  {% if showtimes %}
-  <div class="showtime-strip">
-    {% for showtime in showtimes %}
-    <a class="showtime-chip" href="/showtimes/{{ showtime['id'] }}/seats">
-      <strong>{{ showtime["starts_at"]|replace("T", " ") }}</strong>
-      <span>{{ showtime["movie_title"] }} · {{ showtime["format"] }}</span>
-    </a>
-    {% endfor %}
+  <div class="steps-grid">
+    <div><span>01</span><strong>Chọn phim</strong><p>Xem phim đang chiếu và chọn phim bạn muốn.</p></div>
+    <div><span>02</span><strong>Chọn suất chiếu</strong><p>Chọn rạp, định dạng và giờ chiếu phù hợp.</p></div>
+    <div><span>03</span><strong>Chọn ghế</strong><p>Giữ ghế tạm thời trước khi xác nhận.</p></div>
+    <div><span>04</span><strong>Xác nhận vé</strong><p>Hoàn tất đặt vé và theo dõi log booking.</p></div>
   </div>
-  {% else %}
-  <div class="empty-state">No showtimes have been seeded yet.</div>
-  {% endif %}
 </section>
 {% endblock %}

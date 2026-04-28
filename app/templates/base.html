@@ -1,30 +1,32 @@
 <!doctype html>
-<html lang="en">
+<html lang="vi">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}Movie Ticket Web{% endblock %}</title>
+    <title>{% block title %}Rạp Phim CLM{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', path='/styles.css') }}">
   </head>
   <body>
     <header class="site-header">
       <a class="brand" href="/">
-        <span class="brand-mark">MT</span>
-        <span>Movie Ticket Web</span>
+        <span class="brand-mark">CLM</span>
+        <span>
+          <strong>CLM Cinema</strong>
+          <small>Đặt vé phim Việt</small>
+        </span>
       </a>
-      <nav class="nav-links" aria-label="Primary navigation">
-        <a href="/">Home</a>
-        <a href="/movies">Movies</a>
+      <nav class="nav-links" aria-label="Điều hướng chính">
+        <a href="/">Trang chủ</a>
+        <a href="/movies">Phim đang chiếu</a>
         {% if current_user and current_user["role"] == "admin" %}
-        <a href="/admin">Admin</a>
+        <a href="/admin">Quản trị</a>
         {% endif %}
-        <a href="/health">Health</a>
         {% if current_user %}
         <form action="/logout" method="post">
-          <button class="nav-button" type="submit">Logout</button>
+          <button class="nav-button" type="submit">Đăng xuất</button>
         </form>
         {% else %}
-        <a href="/login">Login</a>
+        <a class="nav-pill" href="/login">Đăng nhập</a>
         {% endif %}
       </nav>
     </header>

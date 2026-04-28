@@ -1,23 +1,23 @@
 {% extends "base.html" %}
 
-{% block title %}Movies · Movie Ticket Web{% endblock %}
+{% block title %}Phim đang chiếu · CLM Cinema{% endblock %}
 
 {% block content %}
 <section class="page-heading">
-  <p class="eyebrow">Movie catalog</p>
-  <h1>Choose a movie</h1>
-  <p class="summary">Five seeded films with different genres, ratings, formats, and booking paths.</p>
+  <p class="eyebrow">Danh sách phim</p>
+  <h1>Phim đang chiếu</h1>
+  <p class="summary">Chọn phim Việt bạn muốn xem, xem thông tin nhanh và vào lịch chiếu để đặt vé.</p>
 </section>
 
 <section class="section">
   {% if movies %}
-  <div class="movie-grid">
+  <div class="movie-grid catalog-grid">
     {% for movie in movies %}
     {% include "partials/movie_card.html" %}
     {% endfor %}
   </div>
   {% else %}
-  <div class="empty-state">No movies found. Run the database seed command and refresh.</div>
+  <div class="empty-state">Chưa có phim trong hệ thống. Hãy chạy seed dữ liệu và tải lại trang.</div>
   {% endif %}
 </section>
 {% endblock %}

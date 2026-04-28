@@ -1,13 +1,26 @@
 <article class="movie-card">
-  <a class="poster theme-{{ movie['visual_theme'] }}" href="/movies/{{ movie['id'] }}" aria-label="View {{ movie['title'] }}">
+  <a
+    class="poster theme-{{ movie['visual_theme'] }} {% if movie['poster_url'] %}poster-image{% endif %}"
+    href="/movies/{{ movie['id'] }}"
+    aria-label="Xem chi tiết {{ movie['title'] }}"
+    {% if movie["poster_url"] %}style="background-image: linear-gradient(180deg, rgba(10, 8, 7, 0.08), rgba(10, 8, 7, 0.86)), url('{{ movie['poster_url'] }}');"{% endif %}
+  >
     <span>{{ movie["rating"] }}</span>
     <strong>{{ movie["title"] }}</strong>
   </a>
   <div class="movie-card-body">
     <div>
       <h3>{{ movie["title"] }}</h3>
-      <p>{{ movie["genre"] }} · {{ movie["duration_minutes"] }} min</p>
+      <p>{{ movie["genre"] }} · {{ movie["duration_minutes"] }} phút</p>
+      <div class="format-tags">
+        <span>2D</span>
+        <span>VIP</span>
+        <span>IMAX</span>
+      </div>
     </div>
-    <a class="button small" href="/movies/{{ movie['id'] }}">Showtimes</a>
+    <div class="card-actions">
+      <a class="button ghost small" href="/movies/{{ movie['id'] }}">Xem chi tiết</a>
+      <a class="button primary small" href="/movies/{{ movie['id'] }}">Đặt vé</a>
+    </div>
   </div>
 </article>

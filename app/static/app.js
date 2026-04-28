@@ -10,7 +10,7 @@ let activeHoldId = "";
 let activeIdempotencyKey = "";
 
 function money(value) {
-  return `${value.toLocaleString("en-US")} VND`;
+  return `${value.toLocaleString("vi-VN")}đ`;
 }
 
 function selectedSeats() {
@@ -41,8 +41,8 @@ function updateSummary() {
     .reduce((sum, input) => sum + Number(input.dataset.addonPrice), 0);
 
   selectedSeatsElement.textContent = seats.length
-    ? seats.map((seat) => seat.dataset.seat).join(", ")
-    : "No seats selected";
+    ? `Ghế: ${seats.map((seat) => seat.dataset.seat).join(", ")}`
+    : "Chưa chọn ghế";
   totalElement.textContent = money(seatTotal + addonTotal);
 
   if (holdButton) {
@@ -83,9 +83,9 @@ if (holdButton && seatMap) {
         seat.classList.remove("selected");
         seat.classList.add("held_by_you");
       });
-      showAlert(`Seats held until ${data.expires_at}. Confirm to finish booking.`, "success");
+      showAlert(`Đã tạm giữ ghế đến ${data.expires_at}. Bấm xác nhận để hoàn tất đặt vé.`, "success");
     } else {
-      showAlert(data.message || "Could not hold seats", "error");
+      showAlert(data.message || "Không thể tạm giữ ghế. Vui lòng chọn ghế khác.", "error");
     }
     updateSummary();
   });
@@ -103,9 +103,10 @@ if (confirmButton) {
     });
     const data = await response.json();
     if (response.ok) {
+      showAlert("Đặt vé thành công. Đang mở vé của bạn...", "success");
       window.location.href = `/bookings/${data.booking_id}`;
     } else {
-      showAlert(data.message || "Booking failed", "error");
+      showAlert(data.message || "Đặt vé thất bại. Vui lòng thử lại.", "error");
     }
   });
 }

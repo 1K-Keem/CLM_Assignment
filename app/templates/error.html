@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}{{ status_code }} · Movie Ticket Web{% endblock %}
+
+{% block content %}
+<section class="page-heading">
+  <p class="eyebrow">Error {{ status_code }}</p>
+  <h1>{{ message }}</h1>
+  <p class="summary">This route is useful for generating request and authorization logs during the demo.</p>
+</section>
+{% endblock %}

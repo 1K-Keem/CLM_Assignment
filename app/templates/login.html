@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Login · Movie Ticket Web{% endblock %}
+
+{% block content %}
+<section class="page-heading">
+  <p class="eyebrow">Local demo auth</p>
+  <h1>Login</h1>
+  <p class="summary">Use user@example.com / demo123 or admin@example.com / admin123. The locked demo account is locked@example.com.</p>
+</section>
+
+<section class="section narrow">
+  <form class="form-panel" action="/login" method="post">
+    <label>
+      <span>Email</span>
+      <input name="username" type="email" value="user@example.com" required>
+    </label>
+    <label>
+      <span>Password</span>
+      <input name="password" type="password" required>
+    </label>
+    <button class="button primary full" type="submit">Login</button>
+  </form>
+</section>
+{% endblock %}

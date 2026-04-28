@@ -162,26 +162,34 @@ def initialize_database() -> None:
 
 def seed_database(connection: sqlite3.Connection) -> None:
     movies = [
-        (1, "Midnight Signal", "midnight-signal", "Sci-Fi Thriller", "T16", 124, "A radio engineer follows a forbidden signal that predicts disasters across Saigon.", "Linh Tran, Bao Nguyen, An Pham", "signal", 1),
-        (2, "The Last Lantern", "the-last-lantern", "Adventure", "P", 109, "Two siblings cross a flooded old quarter to return a ceremonial lantern before dawn.", "Mai Le, Quoc Anh, Nhi Hoang", "lantern", 1),
-        (3, "Neon Lotus", "neon-lotus", "Action", "T18", 132, "An ex-stunt rider enters an underground racing circuit run from a luxury cinema.", "Khanh Vu, Minh Dao, Thao Ly", "neon", 1),
-        (4, "Apricot Sky", "apricot-sky", "Romance", "T13", 101, "A pastry chef and a jazz pianist rebuild a rooftop cinema after a summer storm.", "Ha Bui, Son Lam, Yen Nhi", "apricot", 0),
-        (5, "Orbit Cafe", "orbit-cafe", "Animated Family", "P", 96, "A young inventor opens a floating cafe for astronauts, robots, and lost satellites.", "Vietnamese Voice Cast", "orbit", 0),
+        (1, "Phí Phông: Quỷ Máu Rừng Thiên", "phi-phong-quy-mau-rung-thien", "Kinh dị, tâm linh", "T18", 105, "Một phim Việt đang tạo hiệu ứng phòng vé mạnh, xoay quanh lời nguyền rừng sâu và những bí mật bị chôn giấu.", "Dàn diễn viên Việt Nam", "signal", 1),
+        (2, "Thẩm Mỹ Viện Âm Phủ", "tham-my-vien-am-phu", "Hồi hộp, kinh dị", "T18", 99, "Một cơ sở làm đẹp bí ẩn trở thành nơi kéo khán giả vào chuỗi sự kiện rùng rợn, hợp để demo suất chiếu đêm.", "Dàn diễn viên Việt Nam", "neon", 1),
+        (3, "Mắt Biếc", "mat-biec", "Tình cảm, chính kịch", "T13", 117, "Chuyện tình day dứt của Ngạn và Hà Lan, một trong những phim Việt được nhớ đến nhiều nhất những năm gần đây.", "Trần Nghĩa, Trúc Anh, Khánh Vân", "lantern", 1),
+        (4, "Bố Già", "bo-gia", "Gia đình, hài, chính kịch", "T13", 128, "Câu chuyện cha con đậm chất Sài Gòn, từng là hiện tượng phòng vé Việt với sức lan tỏa đại chúng.", "Trấn Thành, Tuấn Trần, Ngân Chi, Lê Giang", "apricot", 1),
+        (5, "Mai", "mai", "Tâm lý, tình cảm", "T18", 131, "Bộ phim của Trấn Thành về một người phụ nữ đi qua tổn thương, cô đơn và lựa chọn yêu thương chính mình.", "Phương Anh Đào, Tuấn Trần, Trấn Thành, Hồng Đào", "orbit", 1),
+        (6, "Nhà Bà Nữ", "nha-ba-nu", "Gia đình, hài, chính kịch", "T13", 102, "Một lát cắt gia đình đô thị nhiều xung đột, phù hợp cho nhóm khán giả đi xem cuối tuần.", "Lê Giang, Uyển Ân, Trấn Thành, Song Luân", "lantern", 0),
     ]
-    screens = [(1, "Hall 1 - Aurora", 7, 10, "Dolby Atmos"), (2, "Hall 2 - Galaxy", 6, 8, "Premium Laser")]
-    prices = [("2D", 90000), ("3D", 120000), ("IMAX", 165000), ("VIP", 220000)]
+    screens = [
+        (1, "Cinestar Sinh Viên", 7, 10, "Khu đô thị Đại học Quốc Gia TP.HCM"),
+        (2, "Cinestar Quốc Thanh", 6, 8, "Nguyễn Trãi, Quận 1, TP.HCM"),
+        (3, "CGV Vincom Đồng Khởi", 7, 9, "Vincom Center Đồng Khởi, Quận 1, TP.HCM"),
+        (4, "Galaxy Nguyễn Du", 6, 9, "Nguyễn Du, Quận 1, TP.HCM"),
+    ]
+    prices = [("2D", 95000), ("3D", 125000), ("IMAX", 175000), ("VIP", 230000)]
     showtimes = [
-        (101, 1, 1, "2026-05-01T18:30:00", "IMAX", "Vietnamese subtitles"),
-        (102, 1, 2, "2026-05-01T21:15:00", "2D", "Vietnamese subtitles"),
-        (103, 1, 1, "2026-05-02T19:00:00", "3D", "Vietnamese subtitles"),
-        (201, 2, 2, "2026-05-01T17:45:00", "2D", "Vietnamese dub"),
-        (202, 2, 1, "2026-05-02T10:30:00", "VIP", "Vietnamese dub"),
-        (301, 3, 1, "2026-05-01T20:00:00", "IMAX", "Vietnamese subtitles"),
-        (302, 3, 2, "2026-05-02T22:00:00", "3D", "Vietnamese subtitles"),
-        (401, 4, 2, "2026-05-01T19:20:00", "2D", "Vietnamese"),
-        (402, 4, 2, "2026-05-02T16:15:00", "VIP", "Vietnamese"),
-        (501, 5, 1, "2026-05-01T09:45:00", "2D", "Vietnamese dub"),
-        (502, 5, 2, "2026-05-02T14:00:00", "3D", "Vietnamese dub"),
+        (101, 1, 1, "2026-05-01T18:30:00", "2D", "Tiếng Việt"),
+        (102, 1, 2, "2026-05-01T21:15:00", "VIP", "Tiếng Việt"),
+        (103, 1, 3, "2026-05-02T19:00:00", "IMAX", "Tiếng Việt"),
+        (201, 2, 2, "2026-05-01T22:20:00", "2D", "Tiếng Việt"),
+        (202, 2, 4, "2026-05-02T20:45:00", "VIP", "Tiếng Việt"),
+        (301, 3, 1, "2026-05-01T19:10:00", "2D", "Tiếng Việt"),
+        (302, 3, 3, "2026-05-02T16:30:00", "VIP", "Tiếng Việt"),
+        (401, 4, 2, "2026-05-01T20:00:00", "2D", "Tiếng Việt"),
+        (402, 4, 4, "2026-05-02T18:20:00", "VIP", "Tiếng Việt"),
+        (501, 5, 3, "2026-05-01T20:30:00", "IMAX", "Tiếng Việt"),
+        (502, 5, 1, "2026-05-02T21:00:00", "VIP", "Tiếng Việt"),
+        (601, 6, 4, "2026-05-01T17:40:00", "2D", "Tiếng Việt"),
+        (602, 6, 1, "2026-05-02T14:15:00", "2D", "Tiếng Việt"),
     ]
     users = [
         (1, "user@example.com", "Demo User", "demo123", "customer", 0, 1),
@@ -190,9 +198,27 @@ def seed_database(connection: sqlite3.Connection) -> None:
     ]
 
     connection.executemany("INSERT OR IGNORE INTO movies VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", movies)
+    connection.executemany(
+        """
+        UPDATE movies
+        SET title = ?, slug = ?, genre = ?, rating = ?, duration_minutes = ?, synopsis = ?,
+            cast = ?, visual_theme = ?, featured = ?
+        WHERE id = ?
+        """,
+        [(title, slug, genre, rating, duration, synopsis, cast, theme, featured, movie_id) for movie_id, title, slug, genre, rating, duration, synopsis, cast, theme, featured in movies],
+    )
     connection.executemany("INSERT OR IGNORE INTO screens VALUES (?, ?, ?, ?, ?)", screens)
+    connection.executemany(
+        "UPDATE screens SET name = ?, seat_rows = ?, seats_per_row = ?, format_label = ? WHERE id = ?",
+        [(name, rows, seats, label, screen_id) for screen_id, name, rows, seats, label in screens],
+    )
     connection.executemany("INSERT OR IGNORE INTO ticket_prices VALUES (?, ?)", prices)
+    connection.executemany("UPDATE ticket_prices SET price_vnd = ? WHERE format = ?", [(price, fmt) for fmt, price in prices])
     connection.executemany("INSERT OR IGNORE INTO showtimes VALUES (?, ?, ?, ?, ?, ?)", showtimes)
+    connection.executemany(
+        "UPDATE showtimes SET movie_id = ?, screen_id = ?, starts_at = ?, format = ?, language = ? WHERE id = ?",
+        [(movie_id, screen_id, starts_at, fmt, language, showtime_id) for showtime_id, movie_id, screen_id, starts_at, fmt, language in showtimes],
+    )
 
     for user_id, username, display_name, password, role, locked, verified in users:
         salt = f"cinema-demo-{username}"

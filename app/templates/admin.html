@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Admin · Movie Ticket Web{% endblock %}
+
+{% block content %}
+<section class="page-heading">
+  <p class="eyebrow">Admin dashboard</p>
+  <h1>Operations console</h1>
+  <p class="summary">Trigger lightweight admin events for the logging pipeline.</p>
+</section>
+
+<section class="section stats-grid">
+  <div class="summary-panel"><span class="label">Movies</span><strong>{{ stats["movies"] }}</strong></div>
+  <div class="summary-panel"><span class="label">Showtimes</span><strong>{{ stats["showtimes"] }}</strong></div>
+  <div class="summary-panel"><span class="label">Bookings</span><strong>{{ stats["bookings"] }}</strong></div>
+  <div class="summary-panel"><span class="label">Revenue</span><strong>{{ "{:,.0f}".format(stats["revenue"]) }} VND</strong></div>
+</section>
+
+<section class="section booking-layout">
+  <div class="summary-panel">
+    <h2>Demo admin actions</h2>
+    <div class="admin-actions">
+      {% for event in ["movie_created", "movie_updated", "movie_deleted", "showtime_created", "showtime_updated", "showtime_deleted", "pricing_updated", "seatmap_updated", "manual_booking_created", "manual_booking_canceled"] %}
+      <form action="/admin/actions/{{ event }}" method="post">
+        <button class="button ghost full" type="submit">{{ event }}</button>
+      </form>
+      {% endfor %}
+    </div>
+  </div>
+  <aside class="summary-panel">
+    <h2>Recent bookings</h2>
+    {% if stats["recent"] %}
+      {% for booking in stats["recent"] %}
+      <div class="summary-line">
+        <span>#{{ booking["id"] }} · {{ booking["movie_title"] }}</span>
+        <strong>{{ booking["status"] }}</strong>
+      </div>
+      {% endfor %}
+    {% else %}
+      <div class="empty-state">No bookings yet.</div>
+    {% endif %}
+  </aside>
+</section>
+{% endblock %}

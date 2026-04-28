@@ -179,7 +179,7 @@ def showtime_seats(showtime_id: int, request: Request) -> HTMLResponse:
         log_event("seat_hold_expired", "hold", showtime_id=hold["showtime_id"], seat_id=hold["seat_id"], reason="expired", message="Seat hold expired")
     seats = fetch_seats_for_showtime(showtime_id, request.state.session_id)
     log_event("seatmap_viewed", "seat", showtime_id=showtime_id, hall_id=showtime["screen_id"], message="Seat map viewed")
-    changed = [seat["seat_code"] for seat in seats if seat["status"] in {"held", "booked"}]
+    changed = [seat["seat_code"] for seat in seats if seat["status"] in {"held", "held_by_you", "booked"}]
     if changed:
         log_event("seat_status_changed_while_viewing", "seat", level="WARN", showtime_id=showtime_id, hall_id=showtime["screen_id"], seat_ids=changed[:8], reason="held_or_booked", message="Seat status changed while viewing")
     addons = [

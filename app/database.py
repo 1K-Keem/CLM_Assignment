@@ -5,7 +5,6 @@ import sqlite3
 from pathlib import Path
 from typing import Iterable, Optional
 
-
 BASE_DIR = Path(__file__).resolve().parent
 DATA_DIR = BASE_DIR / "data"
 DATABASE_PATH = DATA_DIR / "cinema.db"
@@ -169,12 +168,50 @@ def initialize_database() -> None:
 
 def seed_database(connection: sqlite3.Connection) -> None:
     movies = [
-        (1, "Phí Phông: Quỷ Máu Rừng Thiên", "phi-phong-quy-mau-rung-thien", "Kinh dị, tâm linh", "T18", 105, "Một phim Việt đang tạo hiệu ứng phòng vé mạnh, xoay quanh lời nguyền rừng sâu và những bí mật bị chôn giấu.", "Dàn diễn viên Việt Nam", "signal", 1, None, None),
-        (2, "Thẩm Mỹ Viện Âm Phủ", "tham-my-vien-am-phu", "Hồi hộp, kinh dị", "T18", 99, "Một cơ sở làm đẹp bí ẩn trở thành nơi kéo khán giả vào chuỗi sự kiện rùng rợn, hợp để demo suất chiếu đêm.", "Dàn diễn viên Việt Nam", "neon", 1, None, None),
-        (3, "Mắt Biếc", "mat-biec", "Tình cảm, chính kịch", "T13", 117, "Chuyện tình day dứt của Ngạn và Hà Lan, một trong những phim Việt được nhớ đến nhiều nhất những năm gần đây.", "Trần Nghĩa, Trúc Anh, Khánh Vân", "lantern", 1, None, None),
-        (4, "Bố Già", "bo-gia", "Gia đình, hài, chính kịch", "T13", 128, "Câu chuyện cha con đậm chất Sài Gòn, từng là hiện tượng phòng vé Việt với sức lan tỏa đại chúng.", "Trấn Thành, Tuấn Trần, Ngân Chi, Lê Giang", "apricot", 1, None, None),
-        (5, "Mai", "mai", "Tâm lý, tình cảm", "T18", 131, "Bộ phim của Trấn Thành về một người phụ nữ đi qua tổn thương, cô đơn và lựa chọn yêu thương chính mình.", "Phương Anh Đào, Tuấn Trần, Trấn Thành, Hồng Đào", "orbit", 1, None, None),
-        (6, "Nhà Bà Nữ", "nha-ba-nu", "Gia đình, hài, chính kịch", "T13", 102, "Một lát cắt gia đình đô thị nhiều xung đột, phù hợp cho nhóm khán giả đi xem cuối tuần.", "Lê Giang, Uyển Ân, Trấn Thành, Song Luân", "lantern", 0, None, None),
+        (1, "Bo Gia", "bo-gia", "Gia dinh, hai, chinh kich", "C13", 128, "Bo Gia là phim Việt Nam thuộc thể loại gia dinh, hai, chinh kich, do Tran Thanh, Vu Ngoc Dang đạo diễn. Phim phát hành năm 2021.", "Tran Thanh, Tuan Tran, Ngan Chi, Ngoc Giau, Le Giang, Lan Phuong", "signal", 1, "/static/posters/bo-gia-poster.jpg", "/static/posters/bo-gia-backdrop.jpg"),
+        (2, "Bo tu bao thu", "bo-tu-bao-thu", "Hai, tinh cam", "T16", 132, "Bo tu bao thu là phim Việt Nam thuộc thể loại hai, tinh cam, do Tran Thanh đạo diễn. Phim phát hành năm 2025.", "Tieu Vy, Quoc Anh, Ky Duyen, Le Duong Bao Lam, Le Giang, Uyen An, Tran Thanh", "neon", 1, "/static/posters/bo-tu-bao-thu-poster.jpg", "/static/posters/bo-tu-bao-thu-backdrop.jpg"),
+        (3, "Cua lai vo bau", "cua-lai-vo-bau", "Hai, tinh cam, chinh kich", "T13", 100, "Cua lai vo bau là phim Việt Nam thuộc thể loại hài, tình cảm và chính kịch, phù hợp cho suất chiếu cuối tuần.", "Tran Thanh, Ninh Duong Lan Ngoc, Anh Tu, Le Giang, Hoai Linh", "lantern", 1, "/static/posters/cua-lai-vo-bau-poster.jpg", "/static/posters/cua-lai-vo-bau-backdrop.jpg"),
+        (4, "Hai Phuong", "hai-phuong", "Hanh dong, vo thuat", "C18", 98, "Hai Phuong là phim hành động Việt Nam có tiết tấu nhanh, kể hành trình người mẹ đối đầu đường dây bắt cóc.", "Ngo Thanh Van, Mai Cat Vy, Phan Thanh Nhien, Pham Anh Khoa", "apricot", 1, "/static/posters/hai-phuong-poster.jpg", "/static/posters/hai-phuong-backdrop.jpg"),
+        (5, "Ke an hon", "ke-an-hon", "Kinh di", "T18", 109, "Ke an hon là phim kinh dị Việt Nam, phù hợp để demo các suất chiếu đêm và hành vi đặt vé cao điểm.", "Hoang Ha, Vo Dien Gia Huy, Huynh Thanh Truc, Lan Phuong", "orbit", 1, "/static/posters/ke-an-hon-poster.jpg", "/static/posters/ke-an-hon-backdrop.jpg"),
+        (6, "Lac gioi", "lac-gioi", "Tinh cam, tam ly, chinh kich", "C16", 96, "Lac gioi là phim tâm lý Việt Nam khai thác những mối quan hệ phức tạp và lựa chọn cá nhân.", "Trung Dung, Mai Thu Huyen, Binh An, Thanh Loc, My Uyen", "signal", 1, "/static/posters/lac-gioi-poster.jpg", "/static/posters/lac-gioi-backdrop.jpg"),
+        (7, "Mai", "mai", "Tam ly, tinh cam, chinh kich", "T18", 131, "Mai là phim Việt Nam về một người phụ nữ đi qua tổn thương, cô đơn và lựa chọn yêu thương chính mình.", "Phuong Anh Dao, Tuan Tran, Tran Thanh, Hong Dao, Ngoc Giau", "neon", 1, "/static/posters/mai-poster.jpg", "/static/posters/mai-backdrop.jpg"),
+        (8, "Mua do", "mua-do", "Lich su, chien tranh, chinh kich", "T16", 124, "Mua do là phim lịch sử chiến tranh Việt Nam, phù hợp cho cụm phim đặc biệt và suất chiếu chuyên đề.", "Do Nhat Hoang, Le Ha Anh, Steven Nguyen, Hua Vi Van, Lam Thanh Nha", "lantern", 1, "/static/posters/mua-do-poster.jpg", "/static/posters/mua-do-backdrop.jpg"),
+        (9, "Nha Ba Nu", "nha-ba-nu", "Tam ly, gia dinh, chinh kich", "T16", 102, "Nha Ba Nu là câu chuyện gia đình đô thị nhiều xung đột, phù hợp cho nhóm khán giả đi xem cuối tuần.", "Le Giang, Uyen An, Song Luan, Tran Thanh, Ngoc Giau, Viet Anh", "apricot", 0, "/static/posters/nha-ba-nu-poster.jpg", "/static/posters/nha-ba-nu-backdrop.png"),
+        (10, "Tham tu Kien: Ky an khong dau", "tham-tu-kien-ky-an-khong-dau", "Trinh tham, giat gan, kinh di", "T16", 120, "Tham tu Kien: Ky an khong dau là phim trinh thám pha màu kinh dị, phù hợp cho lịch chiếu tối.", "Quoc Huy, Dinh Ngoc Diep, cac dien vien khac", "orbit", 0, "/static/posters/tham-tu-kien-ky-an-khong-dau-poster.jpg", "/static/posters/tham-tu-kien-ky-an-khong-dau-backdrop.jpg"),
+        (11, "Tu chien tren khong", "tu-chien-tren-khong", "Hanh dong, lich su, toi pham, giat gan, chinh kich", "T16", 118, "Tu chien tren khong là phim hành động lịch sử với nhịp căng thẳng, phù hợp cho suất chiếu IMAX/VIP demo.", "Thai Hoa, Kaity Nguyen, Thanh Son, Vo Dien Gia Huy, Tran Ngoc Vang", "signal", 0, "/static/posters/tu-chien-tren-khong-poster.jpg", "/static/posters/tu-chien-tren-khong-backdrop.jpg"),
+        (12, "The Shawshank Redemption", "the-shawshank-redemption", "Chính kịch", "T16", 142, "The Shawshank Redemption là phim nổi bật trong bộ sưu tập 30 phim, phù hợp cho lịch chiếu chuyên đề tại CLM Cinema.", "Tim Robbins, Morgan Freeman, Bob Gunton, William Sadler", "neon", 0, "/static/posters/the-shawshank-redemption-poster.jpg", "/static/posters/the-shawshank-redemption-poster.jpg"),
+        (13, "The Godfather", "the-godfather", "Tội phạm, chính kịch", "T18", 175, "The Godfather là phim kinh điển về gia đình mafia Corleone, phù hợp cho chuyên đề điện ảnh kinh điển.", "Marlon Brando, Al Pacino, James Caan, Diane Keaton", "lantern", 0, "/static/posters/the-godfather-poster.jpg", "/static/posters/the-godfather-poster.jpg"),
+        (14, "The Godfather Part II", "the-godfather-part-ii", "Tội phạm, chính kịch", "T18", 202, "The Godfather Part II tiếp nối câu chuyện gia đình Corleone với quy mô sử thi và chính kịch sâu.", "Al Pacino, Robert De Niro, Robert Duvall, Diane Keaton", "apricot", 0, "/static/posters/the-godfather-part-ii-poster.jpg", "/static/posters/the-godfather-part-ii-poster.jpg"),
+        (15, "The Dark Knight", "the-dark-knight", "Hành động, tội phạm", "T16", 152, "The Dark Knight là phim siêu anh hùng tội phạm nổi bật, phù hợp cho lịch chiếu đêm và định dạng lớn.", "Christian Bale, Heath Ledger, Aaron Eckhart, Michael Caine", "orbit", 0, "/static/posters/the-dark-knight-poster.jpg", "/static/posters/the-dark-knight-poster.jpg"),
+        (16, "Schindler's List", "schindler-s-list", "Chính kịch, lịch sử", "T16", 195, "Schindler's List là phim chính kịch lịch sử kinh điển, phù hợp cho suất chiếu chuyên đề.", "Liam Neeson, Ben Kingsley, Ralph Fiennes", "signal", 0, "/static/posters/schindler-s-list-poster.jpg", "/static/posters/schindler-s-list-poster.jpg"),
+        (17, "Pulp Fiction", "pulp-fiction", "Tội phạm, hài đen", "T18", 154, "Pulp Fiction là phim tội phạm hài đen có cấu trúc phi tuyến, phù hợp cho bộ sưu tập phim kinh điển.", "John Travolta, Uma Thurman, Samuel L. Jackson, Bruce Willis", "neon", 0, "/static/posters/pulp-fiction-poster.jpg", "/static/posters/pulp-fiction-poster.jpg"),
+        (18, "The Lord of the Rings: The Return of the King", "the-lord-of-the-rings-the-return-of-the-king", "Phiêu lưu, giả tưởng", "T13", 201, "The Return of the King là phần kết sử thi của Chúa Nhẫn, phù hợp cho marathon cuối tuần.", "Elijah Wood, Viggo Mortensen, Ian McKellen, Sean Astin", "lantern", 0, "/static/posters/the-lord-of-the-rings-the-return-of-the-king-poster.jpg", "/static/posters/the-lord-of-the-rings-the-return-of-the-king-poster.jpg"),
+        (19, "The Lord of the Rings: The Fellowship of the Ring", "the-lord-of-the-rings-the-fellowship-of-the-ring", "Phiêu lưu, giả tưởng", "T13", 178, "The Fellowship of the Ring mở đầu hành trình Trung Địa, phù hợp cho suất chiếu chuyên đề giả tưởng.", "Elijah Wood, Ian McKellen, Viggo Mortensen, Sean Astin", "apricot", 0, "/static/posters/the-lord-of-the-rings-the-fellowship-of-the-ring-poster.jpg", "/static/posters/the-lord-of-the-rings-the-fellowship-of-the-ring-poster.jpg"),
+        (20, "The Lord of the Rings: The Two Towers", "the-lord-of-the-rings-the-two-towers", "Phiêu lưu, giả tưởng", "T13", 179, "The Two Towers tiếp tục cuộc chiến Trung Địa, phù hợp cho lịch chiếu marathon.", "Elijah Wood, Ian McKellen, Viggo Mortensen, Orlando Bloom", "orbit", 0, "/static/posters/the-lord-of-the-rings-the-two-towers-poster.jpg", "/static/posters/the-lord-of-the-rings-the-two-towers-poster.jpg"),
+        (21, "Inception", "inception", "Khoa học viễn tưởng, hành động", "T13", 148, "Inception là phim khoa học viễn tưởng về giấc mơ và ký ức, hợp cho suất chiếu định dạng lớn.", "Leonardo DiCaprio, Joseph Gordon-Levitt, Elliot Page, Tom Hardy", "signal", 0, "/static/posters/inception-poster.jpg", "/static/posters/inception-poster.jpg"),
+        (22, "Interstellar", "interstellar", "Khoa học viễn tưởng, phiêu lưu", "T13", 169, "Interstellar là chuyến du hành không gian giàu cảm xúc, phù hợp cho lịch chiếu IMAX demo.", "Matthew McConaughey, Anne Hathaway, Jessica Chastain, Michael Caine", "neon", 0, "/static/posters/interstellar-poster.jpg", "/static/posters/interstellar-poster.jpg"),
+        (23, "Fight Club", "fight-club", "Tâm lý, tội phạm", "T18", 139, "Fight Club là phim tâm lý tội phạm nổi bật, phù hợp cho cụm phim cult classic.", "Brad Pitt, Edward Norton, Helena Bonham Carter, Meat Loaf", "lantern", 0, "/static/posters/fight-club-poster.jpg", "/static/posters/fight-club-poster.jpg"),
+        (24, "Forrest Gump", "forrest-gump", "Chính kịch, hài lãng mạn", "T13", 142, "Forrest Gump là hành trình cuộc đời giàu cảm xúc, phù hợp cho suất chiếu gia đình.", "Tom Hanks, Robin Wright, Gary Sinise, Sally Field", "apricot", 0, "/static/posters/forrest-gump-poster.jpg", "/static/posters/forrest-gump-poster.jpg"),
+        (25, "Parasite", "parasite", "Chính kịch, giật gân", "T16", 132, "Parasite là phim chính kịch giật gân Hàn Quốc, phù hợp cho suất chiếu điện ảnh châu Á.", "Song Kang-ho, Lee Sun-kyun, Cho Yeo-jeong, Park So-dam", "orbit", 0, "/static/posters/parasite-poster.jpg", "/static/posters/parasite-poster.jpg"),
+        (26, "Spirited Away", "spirited-away", "Hoạt hình, giả tưởng", "T13", 125, "Spirited Away là phim hoạt hình giả tưởng kinh điển, phù hợp cho khán giả gia đình.", "Rumi Hiiragi, Miyu Irino, Mari Natsuki, Takashi Naito", "signal", 0, "/static/posters/spirited-away-poster.jpg", "/static/posters/spirited-away-poster.jpg"),
+        (27, "The Matrix", "the-matrix", "Khoa học viễn tưởng, hành động", "T16", 136, "The Matrix là phim hành động khoa học viễn tưởng kinh điển, phù hợp cho suất chiếu đêm.", "Keanu Reeves, Laurence Fishburne, Carrie-Anne Moss, Hugo Weaving", "neon", 0, "/static/posters/the-matrix-poster.jpg", "/static/posters/the-matrix-poster.jpg"),
+        (28, "Goodfellas", "goodfellas", "Tội phạm, chính kịch", "T18", 146, "Goodfellas là phim tội phạm chính kịch kinh điển, phù hợp cho chuyên đề điện ảnh Mỹ.", "Ray Liotta, Robert De Niro, Joe Pesci, Lorraine Bracco", "lantern", 0, "/static/posters/goodfellas-poster.jpg", "/static/posters/goodfellas-poster.jpg"),
+        (29, "Se7en", "se7en", "Tội phạm, giật gân", "T18", 127, "Se7en là phim tội phạm giật gân u tối, phù hợp cho suất chiếu thriller đêm.", "Brad Pitt, Morgan Freeman, Gwyneth Paltrow, Kevin Spacey", "apricot", 0, "/static/posters/se7en-poster.jpg", "/static/posters/se7en-poster.jpg"),
+        (30, "The Silence of the Lambs", "the-silence-of-the-lambs", "Tội phạm, kinh dị", "T18", 118, "The Silence of the Lambs là phim tội phạm kinh dị kinh điển, phù hợp cho lịch chiếu thriller.", "Jodie Foster, Anthony Hopkins, Scott Glenn, Ted Levine", "orbit", 0, "/static/posters/the-silence-of-the-lambs-poster.jpg", "/static/posters/the-silence-of-the-lambs-poster.jpg"),
+        (31, "Saving Private Ryan", "saving-private-ryan", "Chiến tranh, chính kịch", "T18", 169, "Saving Private Ryan là phim chiến tranh chính kịch nổi bật, phù hợp cho suất chiếu chuyên đề.", "Tom Hanks, Matt Damon, Tom Sizemore, Edward Burns", "signal", 0, "/static/posters/saving-private-ryan-poster.jpg", "/static/posters/saving-private-ryan-poster.jpg"),
+        (32, "Whiplash", "whiplash", "Chính kịch, âm nhạc", "T16", 106, "Whiplash là phim chính kịch âm nhạc căng thẳng, phù hợp cho suất chiếu nghệ thuật.", "Miles Teller, J. K. Simmons, Paul Reiser, Melissa Benoist", "neon", 0, "/static/posters/whiplash-poster.jpg", "/static/posters/whiplash-poster.jpg"),
+        (33, "La La Land", "la-la-land", "Nhạc kịch, lãng mạn", "T13", 128, "La La Land là phim nhạc kịch lãng mạn hiện đại, phù hợp cho suất chiếu couple night.", "Ryan Gosling, Emma Stone, John Legend, Rosemarie DeWitt", "lantern", 0, "/static/posters/la-la-land-poster.jpg", "/static/posters/la-la-land-poster.jpg"),
+        (34, "Inside Out", "inside-out", "Hoạt hình, gia đình", "T13", 95, "Inside Out là phim hoạt hình gia đình về cảm xúc, phù hợp cho suất chiếu thiếu nhi.", "Amy Poehler, Phyllis Smith, Bill Hader, Lewis Black", "apricot", 0, "/static/posters/inside-out-poster.jpg", "/static/posters/inside-out-poster.jpg"),
+        (35, "Coco", "coco", "Hoạt hình, âm nhạc", "T13", 105, "Coco là phim hoạt hình âm nhạc giàu cảm xúc, phù hợp cho khán giả gia đình.", "Anthony Gonzalez, Gael Garcia Bernal, Benjamin Bratt, Alanna Ubach", "orbit", 0, "/static/posters/coco-poster.jpg", "/static/posters/coco-poster.jpg"),
+        (36, "The Lion King", "the-lion-king", "Hoạt hình, gia đình", "T13", 88, "The Lion King là phim hoạt hình gia đình kinh điển, phù hợp cho suất chiếu cuối tuần.", "Matthew Broderick, James Earl Jones, Jeremy Irons, Nathan Lane", "signal", 0, "/static/posters/the-lion-king-poster.jpg", "/static/posters/the-lion-king-poster.jpg"),
+        (37, "Gladiator", "gladiator", "Hành động, sử thi", "T16", 155, "Gladiator là phim hành động sử thi nổi bật, phù hợp cho suất chiếu màn hình lớn.", "Russell Crowe, Joaquin Phoenix, Connie Nielsen, Oliver Reed", "neon", 0, "/static/posters/gladiator-poster.jpg", "/static/posters/gladiator-poster.jpg"),
+        (38, "Titanic", "titanic", "Lãng mạn, thảm họa", "T13", 195, "Titanic là phim lãng mạn thảm họa kinh điển, phù hợp cho suất chiếu đặc biệt.", "Leonardo DiCaprio, Kate Winslet, Billy Zane, Kathy Bates", "lantern", 0, "/static/posters/titanic-poster.jpg", "/static/posters/titanic-poster.jpg"),
+        (39, "Toy Story", "toy-story", "Hoạt hình, gia đình", "T13", 81, "Toy Story là phim hoạt hình gia đình kinh điển, phù hợp cho suất chiếu thiếu nhi.", "Tom Hanks, Tim Allen, Don Rickles, Wallace Shawn", "apricot", 0, "/static/posters/toy-story-poster.jpg", "/static/posters/toy-story-poster.jpg"),
+        (40, "Avengers: Endgame", "avengers-endgame", "Siêu anh hùng, hành động", "T13", 181, "Avengers: Endgame là phim siêu anh hùng hành động quy mô lớn, phù hợp cho suất chiếu IMAX.", "Robert Downey Jr., Chris Evans, Mark Ruffalo, Chris Hemsworth", "orbit", 0, "/static/posters/avengers-endgame-poster.jpg", "/static/posters/avengers-endgame-poster.jpg"),
+        (41, "Spider-Man: Into the Spider-Verse", "spider-man-into-the-spider-verse", "Hoạt hình, siêu anh hùng", "T13", 117, "Spider-Man: Into the Spider-Verse là phim hoạt hình siêu anh hùng giàu phong cách thị giác.", "Shameik Moore, Jake Johnson, Hailee Steinfeld, Mahershala Ali", "signal", 0, "/static/posters/spider-man-into-the-spider-verse-poster.jpg", "/static/posters/spider-man-into-the-spider-verse-poster.jpg"),
+        (42, "Avatar", "avatar", "Khoa học viễn tưởng, phiêu lưu", "T13", 162, "Avatar là phim khoa học viễn tưởng phiêu lưu quy mô lớn, phù hợp cho suất chiếu màn hình lớn.", "Sam Worthington, Zoe Saldana, Sigourney Weaver, Stephen Lang", "neon", 0, "/static/posters/avatar-poster.jpg", "/static/posters/avatar-poster.jpg"),
+        (43, "Transformers", "transformers", "Hành động, khoa học viễn tưởng", "T13", 144, "Transformers là phim hành động khoa học viễn tưởng, phù hợp cho suất chiếu giải trí cuối tuần.", "Shia LaBeouf, Megan Fox, Josh Duhamel, Tyrese Gibson", "lantern", 0, "/static/posters/transformers-poster.jpg", "/static/posters/transformers-poster.jpg"),
+        (44, "Pacific Rim", "pacific-rim", "Khoa học viễn tưởng, hành động", "T13", 131, "Pacific Rim là phim khoa học viễn tưởng hành động về Jaeger và Kaiju, phù hợp cho suất chiếu màn hình lớn.", "Charlie Hunnam, Idris Elba, Rinko Kikuchi, Charlie Day", "apricot", 0, "/static/posters/pacific-rim-poster.jpg", "/static/posters/pacific-rim-poster.jpg"),
     ]
     screens = [
         (1, "Cinestar Sinh Viên", 7, 10, "Khu đô thị Đại học Quốc Gia TP.HCM"),
@@ -183,21 +220,17 @@ def seed_database(connection: sqlite3.Connection) -> None:
         (4, "Galaxy Nguyễn Du", 6, 9, "Nguyễn Du, Quận 1, TP.HCM"),
     ]
     prices = [("2D", 95000), ("3D", 125000), ("IMAX", 175000), ("VIP", 230000)]
-    showtimes = [
-        (101, 1, 1, "2026-05-01T18:30:00", "2D", "Tiếng Việt"),
-        (102, 1, 2, "2026-05-01T21:15:00", "VIP", "Tiếng Việt"),
-        (103, 1, 3, "2026-05-02T19:00:00", "IMAX", "Tiếng Việt"),
-        (201, 2, 2, "2026-05-01T22:20:00", "2D", "Tiếng Việt"),
-        (202, 2, 4, "2026-05-02T20:45:00", "VIP", "Tiếng Việt"),
-        (301, 3, 1, "2026-05-01T19:10:00", "2D", "Tiếng Việt"),
-        (302, 3, 3, "2026-05-02T16:30:00", "VIP", "Tiếng Việt"),
-        (401, 4, 2, "2026-05-01T20:00:00", "2D", "Tiếng Việt"),
-        (402, 4, 4, "2026-05-02T18:20:00", "VIP", "Tiếng Việt"),
-        (501, 5, 3, "2026-05-01T20:30:00", "IMAX", "Tiếng Việt"),
-        (502, 5, 1, "2026-05-02T21:00:00", "VIP", "Tiếng Việt"),
-        (601, 6, 4, "2026-05-01T17:40:00", "2D", "Tiếng Việt"),
-        (602, 6, 1, "2026-05-02T14:15:00", "2D", "Tiếng Việt"),
-    ]
+    formats = ["2D", "VIP", "IMAX", "3D"]
+    showtimes = []
+    first_showtime = datetime(2026, 5, 1, 9, 30)
+    for index, movie in enumerate(movies):
+        movie_id = movie[0]
+        for offset in range(3):
+            showtime_id = movie_id * 100 + offset + 1
+            screen_id = screens[(index + offset) % len(screens)][0]
+            starts_at = first_showtime + timedelta(days=index // 8, hours=(index * 2 + offset * 4) % 13, minutes=15 * (index % 4))
+            showtimes.append((showtime_id, movie_id, screen_id, starts_at.isoformat(), formats[(index + offset) % len(formats)], "Phụ đề / thuyết minh tuỳ suất"))
+    showtimes[0] = (101, 1, 1, "2026-05-01T18:30:00", "2D", "Tiếng Việt")
     users = [
         (1, "user@example.com", "Demo User", "demo123", "customer", 0, 1),
         (2, "admin@example.com", "Admin User", "admin123", "admin", 0, 1),
@@ -210,8 +243,8 @@ def seed_database(connection: sqlite3.Connection) -> None:
         UPDATE movies
         SET title = ?, slug = ?, genre = ?, rating = ?, duration_minutes = ?, synopsis = ?,
             cast = ?, visual_theme = ?, featured = ?,
-            poster_url = COALESCE(poster_url, ?),
-            backdrop_url = COALESCE(backdrop_url, ?)
+            poster_url = ?,
+            backdrop_url = ?
         WHERE id = ?
         """,
         [(title, slug, genre, rating, duration, synopsis, cast, theme, featured, poster, backdrop, movie_id) for movie_id, title, slug, genre, rating, duration, synopsis, cast, theme, featured, poster, backdrop in movies],
@@ -223,6 +256,16 @@ def seed_database(connection: sqlite3.Connection) -> None:
     )
     connection.executemany("INSERT OR IGNORE INTO ticket_prices VALUES (?, ?)", prices)
     connection.executemany("UPDATE ticket_prices SET price_vnd = ? WHERE format = ?", [(price, fmt) for fmt, price in prices])
+    movie_ids = [movie[0] for movie in movies]
+    showtime_ids = [showtime[0] for showtime in showtimes]
+    connection.execute(
+        f"DELETE FROM showtimes WHERE id NOT IN ({','.join('?' for _ in showtime_ids)})",
+        showtime_ids,
+    )
+    connection.execute(
+        f"DELETE FROM movies WHERE id NOT IN ({','.join('?' for _ in movie_ids)})",
+        movie_ids,
+    )
     connection.executemany("INSERT OR IGNORE INTO showtimes VALUES (?, ?, ?, ?, ?, ?)", showtimes)
     connection.executemany(
         "UPDATE showtimes SET movie_id = ?, screen_id = ?, starts_at = ?, format = ?, language = ? WHERE id = ?",

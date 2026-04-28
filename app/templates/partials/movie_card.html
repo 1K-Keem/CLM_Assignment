@@ -1,10 +1,9 @@
 <article class="movie-card">
-  <a
-    class="poster theme-{{ movie['visual_theme'] }} {% if movie['poster_url'] %}poster-image{% endif %}"
-    href="/movies/{{ movie['id'] }}"
-    aria-label="Xem chi tiết {{ movie['title'] }}"
-    {% if movie["poster_url"] %}style="background-image: linear-gradient(180deg, rgba(10, 8, 7, 0.08), rgba(10, 8, 7, 0.86)), url('{{ movie['poster_url'] }}');"{% endif %}
-  >
+  <a class="poster theme-{{ movie['visual_theme'] }} {% if movie['poster_url'] %}poster-with-image{% endif %}" href="/movies/{{ movie['id'] }}" aria-label="Xem chi tiết {{ movie['title'] }}">
+    {% if movie["poster_url"] %}
+    <span class="poster-blur" style="background-image: url('{{ movie['poster_url'] }}');"></span>
+    <img src="{{ movie['poster_url'] }}" alt="Bìa phim {{ movie['title'] }}" loading="lazy">
+    {% endif %}
     <span>{{ movie["rating"] }}</span>
     <strong>{{ movie["title"] }}</strong>
   </a>

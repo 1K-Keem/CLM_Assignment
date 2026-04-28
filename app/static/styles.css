@@ -331,7 +331,8 @@ main {
 .poster {
   position: relative;
   display: flex;
-  min-height: 320px;
+  aspect-ratio: 2 / 3;
+  min-height: auto;
   flex-direction: column;
   justify-content: space-between;
   padding: 20px;
@@ -342,11 +343,10 @@ main {
 
 .poster::after {
   position: absolute;
-  inset: auto -28% -24% 10%;
-  height: 58%;
-  border-radius: 50%;
-  background: rgba(255, 247, 237, 0.14);
+  inset: 0;
+  background: linear-gradient(180deg, rgba(9, 7, 5, 0.06) 0%, rgba(9, 7, 5, 0.08) 45%, rgba(9, 7, 5, 0.78) 100%);
   content: "";
+  pointer-events: none;
 }
 
 .poster span,
@@ -373,8 +373,36 @@ main {
   min-height: 500px;
 }
 
-.poster-image::after {
-  background: linear-gradient(180deg, transparent, rgba(9, 7, 5, 0.48));
+.poster-with-image {
+  background: rgba(20, 12, 9, 0.94);
+}
+
+.poster-with-image img {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+.poster-blur {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: auto;
+  border-radius: 0;
+  background-size: cover;
+  background-position: center;
+  filter: blur(18px);
+  opacity: 0.32;
+  transform: scale(1.08);
+}
+
+.poster-with-image > span:not(.poster-blur),
+.poster-with-image > strong {
+  z-index: 2;
 }
 
 .theme-signal {
@@ -538,7 +566,7 @@ main {
 }
 
 .detail-poster {
-  min-height: 560px;
+  min-height: auto;
   border-radius: 8px;
   box-shadow: 0 24px 70px rgba(0, 0, 0, 0.38);
 }

@@ -8,9 +8,12 @@
   {% if movie["backdrop_url"] %}style="background-image: linear-gradient(90deg, rgba(10, 8, 7, 0.94), rgba(10, 8, 7, 0.66)), url('{{ movie['backdrop_url'] }}');"{% endif %}
 >
   <div
-    class="poster detail-poster theme-{{ movie['visual_theme'] }} {% if movie['poster_url'] %}poster-image{% endif %}"
-    {% if movie["poster_url"] %}style="background-image: linear-gradient(180deg, rgba(10, 8, 7, 0.08), rgba(10, 8, 7, 0.86)), url('{{ movie['poster_url'] }}');"{% endif %}
+    class="poster detail-poster theme-{{ movie['visual_theme'] }} {% if movie['poster_url'] %}poster-with-image{% endif %}"
   >
+    {% if movie["poster_url"] %}
+    <span class="poster-blur" style="background-image: url('{{ movie['poster_url'] }}');"></span>
+    <img src="{{ movie['poster_url'] }}" alt="Bìa phim {{ movie['title'] }}" loading="lazy">
+    {% endif %}
     <span>{{ movie["rating"] }}</span>
     <strong>{{ movie["title"] }}</strong>
   </div>

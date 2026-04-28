@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Movie Ticket Web{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <div class="hero-copy">
+    <p class="eyebrow">Now showing</p>
+    <h1>Book the next great cinema night.</h1>
+    <p class="summary">
+      Browse featured movies, pick a format, choose seats, and prepare an order with snacks.
+    </p>
+    <div class="hero-actions">
+      <a class="button primary" href="/movies">View movies</a>
+      {% if showtimes %}
+      <a class="button ghost" href="/showtimes/{{ showtimes[0]['id'] }}/seats">Start booking</a>
+      {% endif %}
+    </div>
+  </div>
+  <div class="hero-ticket" aria-label="Featured showtime">
+    {% if showtimes %}
+    <span class="ticket-label">Next show</span>
+    <strong>{{ showtimes[0]["movie_title"] }}</strong>
+    <span>{{ showtimes[0]["format"] }} · {{ showtimes[0]["screen_name"] }}</span>
+    <span>{{ showtimes[0]["starts_at"]|replace("T", " ") }}</span>
+    {% else %}
+    <span class="ticket-label">No showtimes</span>
+    <strong>Schedule coming soon</strong>
+    <span>Check back later</span>
+    {% endif %}
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">Featured</p>
+      <h2>Today at CLM Cinema</h2>
+    </div>
+    <a href="/movies">All movies</a>
+  </div>
+  {% if movies %}
+  <div class="movie-grid">
+    {% for movie in movies %}
+    {% include "partials/movie_card.html" %}
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-state">No featured movies are available yet.</div>
+  {% endif %}
+</section>
+
+<section class="section compact">
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">Fast picks</p>
+      <h2>Upcoming showtimes</h2>
+    </div>
+  </div>
+  {% if showtimes %}
+  <div class="showtime-strip">
+    {% for showtime in showtimes %}
+    <a class="showtime-chip" href="/showtimes/{{ showtime['id'] }}/seats">
+      <strong>{{ showtime["starts_at"]|replace("T", " ") }}</strong>
+      <span>{{ showtime["movie_title"] }} · {{ showtime["format"] }}</span>
+    </a>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-state">No showtimes have been seeded yet.</div>
+  {% endif %}
+</section>
+{% endblock %}

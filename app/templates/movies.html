@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Movies · Movie Ticket Web{% endblock %}
+
+{% block content %}
+<section class="page-heading">
+  <p class="eyebrow">Movie catalog</p>
+  <h1>Choose a movie</h1>
+  <p class="summary">Five seeded films with different genres, ratings, formats, and booking paths.</p>
+</section>
+
+<section class="section">
+  {% if movies %}
+  <div class="movie-grid">
+    {% for movie in movies %}
+    {% include "partials/movie_card.html" %}
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-state">No movies found. Run the database seed command and refresh.</div>
+  {% endif %}
+</section>
+{% endblock %}

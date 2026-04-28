@@ -1,0 +1,13 @@
+<article class="movie-card">
+  <a class="poster theme-{{ movie['visual_theme'] }}" href="/movies/{{ movie['id'] }}" aria-label="View {{ movie['title'] }}">
+    <span>{{ movie["rating"] }}</span>
+    <strong>{{ movie["title"] }}</strong>
+  </a>
+  <div class="movie-card-body">
+    <div>
+      <h3>{{ movie["title"] }}</h3>
+      <p>{{ movie["genre"] }} · {{ movie["duration_minutes"] }} min</p>
+    </div>
+    <a class="button small" href="/movies/{{ movie['id'] }}">Showtimes</a>
+  </div>
+</article>

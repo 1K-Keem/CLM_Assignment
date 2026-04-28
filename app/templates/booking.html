@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Booking #{{ booking["id"] }} · Movie Ticket Web{% endblock %}
+
+{% block content %}
+<section class="page-heading">
+  <p class="eyebrow">Booking {{ booking["status"] }}</p>
+  <h1>{{ booking["movie_title"] }}</h1>
+  <p class="summary">{{ booking["format"] }} · {{ booking["screen_name"] }} · {{ booking["starts_at"]|replace("T", " ") }}</p>
+</section>
+
+<section class="section booking-layout">
+  <div class="summary-panel">
+    <h2>Seats</h2>
+    <div class="selected-seats">{{ seats|join(", ") }}</div>
+    <div class="summary-line">
+      <span>Total</span>
+      <strong>{{ "{:,.0f}".format(booking["amount"]) }} {{ booking["currency"] }}</strong>
+    </div>
+  </div>
+  <aside class="summary-panel">
+    <p class="eyebrow">Actions</p>
+    {% if booking["status"] != "canceled" %}
+    <form action="/bookings/{{ booking['id'] }}/cancel" method="post">
+      <button class="button ghost full" type="submit">Cancel booking</button>
+    </form>
+    {% else %}
+    <div class="empty-state">This booking has been canceled and seats were released.</div>
+    {% endif %}
+  </aside>
+</section>
+{% endblock %}

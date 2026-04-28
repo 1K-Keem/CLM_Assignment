@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}{{ movie["title"] }} · Movie Ticket Web{% endblock %}
+
+{% block content %}
+<section class="detail-hero">
+  <div class="poster poster-large theme-{{ movie['visual_theme'] }}">
+    <span>{{ movie["rating"] }}</span>
+    <strong>{{ movie["title"] }}</strong>
+  </div>
+  <div class="detail-copy">
+    <p class="eyebrow">{{ movie["genre"] }} · {{ movie["duration_minutes"] }} min</p>
+    <h1>{{ movie["title"] }}</h1>
+    <p class="summary">{{ movie["synopsis"] }}</p>
+    <div class="metadata">
+      <div>
+        <span class="label">Cast</span>
+        <strong>{{ movie["cast"] }}</strong>
+      </div>
+      <div>
+        <span class="label">Rating</span>
+        <strong>{{ movie["rating"] }}</strong>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section booking-layout">
+  <div>
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">Showtimes</p>
+        <h2>Select format and time</h2>
+      </div>
+    </div>
+    {% if showtimes %}
+    <div class="showtime-list">
+      {% for showtime in showtimes %}
+      <a class="showtime-row" href="/showtimes/{{ showtime['id'] }}/seats">
+        <span class="format-badge">{{ showtime["format"] }}</span>
+        <div>
+          <strong>{{ showtime["starts_at"]|replace("T", " ") }}</strong>
+          <span>{{ showtime["screen_name"] }} · {{ showtime["format_label"] }} · {{ showtime["language"] }}</span>
+        </div>
+        <span>{{ "{:,.0f}".format(showtime["price_vnd"]) }} VND</span>
+      </a>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">No showtimes are scheduled for this movie.</div>
+    {% endif %}
+  </div>
+
+  <aside class="summary-panel">
+    <p class="eyebrow">Ticket formats</p>
+    {% for price in prices %}
+    <div class="summary-line">
+      <span>{{ price["format"] }}</span>
+      <strong>{{ "{:,.0f}".format(price["price_vnd"]) }} VND</strong>
+    </div>
+    {% endfor %}
+  </aside>
+</section>
+{% endblock %}

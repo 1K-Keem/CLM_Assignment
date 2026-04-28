@@ -43,7 +43,9 @@ def initialize_database() -> None:
                 synopsis TEXT NOT NULL,
                 cast TEXT NOT NULL,
                 visual_theme TEXT NOT NULL,
-                featured INTEGER NOT NULL DEFAULT 0
+                featured INTEGER NOT NULL DEFAULT 0,
+                poster_url TEXT,
+                backdrop_url TEXT
             );
 
             CREATE TABLE IF NOT EXISTS screens (
@@ -157,17 +159,22 @@ def initialize_database() -> None:
             );
             """
         )
+        columns = {row["name"] for row in connection.execute("PRAGMA table_info(movies)").fetchall()}
+        if "poster_url" not in columns:
+            connection.execute("ALTER TABLE movies ADD COLUMN poster_url TEXT")
+        if "backdrop_url" not in columns:
+            connection.execute("ALTER TABLE movies ADD COLUMN backdrop_url TEXT")
         seed_database(connection)
 
 
 def seed_database(connection: sqlite3.Connection) -> None:
     movies = [
-        (1, "Phí Phông: Quỷ Máu Rừng Thiên", "phi-phong-quy-mau-rung-thien", "Kinh dị, tâm linh", "T18", 105, "Một phim Việt đang tạo hiệu ứng phòng vé mạnh, xoay quanh lời nguyền rừng sâu và những bí mật bị chôn giấu.", "Dàn diễn viên Việt Nam", "signal", 1),
-        (2, "Thẩm Mỹ Viện Âm Phủ", "tham-my-vien-am-phu", "Hồi hộp, kinh dị", "T18", 99, "Một cơ sở làm đẹp bí ẩn trở thành nơi kéo khán giả vào chuỗi sự kiện rùng rợn, hợp để demo suất chiếu đêm.", "Dàn diễn viên Việt Nam", "neon", 1),
-        (3, "Mắt Biếc", "mat-biec", "Tình cảm, chính kịch", "T13", 117, "Chuyện tình day dứt của Ngạn và Hà Lan, một trong những phim Việt được nhớ đến nhiều nhất những năm gần đây.", "Trần Nghĩa, Trúc Anh, Khánh Vân", "lantern", 1),
-        (4, "Bố Già", "bo-gia", "Gia đình, hài, chính kịch", "T13", 128, "Câu chuyện cha con đậm chất Sài Gòn, từng là hiện tượng phòng vé Việt với sức lan tỏa đại chúng.", "Trấn Thành, Tuấn Trần, Ngân Chi, Lê Giang", "apricot", 1),
-        (5, "Mai", "mai", "Tâm lý, tình cảm", "T18", 131, "Bộ phim của Trấn Thành về một người phụ nữ đi qua tổn thương, cô đơn và lựa chọn yêu thương chính mình.", "Phương Anh Đào, Tuấn Trần, Trấn Thành, Hồng Đào", "orbit", 1),
-        (6, "Nhà Bà Nữ", "nha-ba-nu", "Gia đình, hài, chính kịch", "T13", 102, "Một lát cắt gia đình đô thị nhiều xung đột, phù hợp cho nhóm khán giả đi xem cuối tuần.", "Lê Giang, Uyển Ân, Trấn Thành, Song Luân", "lantern", 0),
+        (1, "Phí Phông: Quỷ Máu Rừng Thiên", "phi-phong-quy-mau-rung-thien", "Kinh dị, tâm linh", "T18", 105, "Một phim Việt đang tạo hiệu ứng phòng vé mạnh, xoay quanh lời nguyền rừng sâu và những bí mật bị chôn giấu.", "Dàn diễn viên Việt Nam", "signal", 1, None, None),
+        (2, "Thẩm Mỹ Viện Âm Phủ", "tham-my-vien-am-phu", "Hồi hộp, kinh dị", "T18", 99, "Một cơ sở làm đẹp bí ẩn trở thành nơi kéo khán giả vào chuỗi sự kiện rùng rợn, hợp để demo suất chiếu đêm.", "Dàn diễn viên Việt Nam", "neon", 1, None, None),
+        (3, "Mắt Biếc", "mat-biec", "Tình cảm, chính kịch", "T13", 117, "Chuyện tình day dứt của Ngạn và Hà Lan, một trong những phim Việt được nhớ đến nhiều nhất những năm gần đây.", "Trần Nghĩa, Trúc Anh, Khánh Vân", "lantern", 1, None, None),
+        (4, "Bố Già", "bo-gia", "Gia đình, hài, chính kịch", "T13", 128, "Câu chuyện cha con đậm chất Sài Gòn, từng là hiện tượng phòng vé Việt với sức lan tỏa đại chúng.", "Trấn Thành, Tuấn Trần, Ngân Chi, Lê Giang", "apricot", 1, None, None),
+        (5, "Mai", "mai", "Tâm lý, tình cảm", "T18", 131, "Bộ phim của Trấn Thành về một người phụ nữ đi qua tổn thương, cô đơn và lựa chọn yêu thương chính mình.", "Phương Anh Đào, Tuấn Trần, Trấn Thành, Hồng Đào", "orbit", 1, None, None),
+        (6, "Nhà Bà Nữ", "nha-ba-nu", "Gia đình, hài, chính kịch", "T13", 102, "Một lát cắt gia đình đô thị nhiều xung đột, phù hợp cho nhóm khán giả đi xem cuối tuần.", "Lê Giang, Uyển Ân, Trấn Thành, Song Luân", "lantern", 0, None, None),
     ]
     screens = [
         (1, "Cinestar Sinh Viên", 7, 10, "Khu đô thị Đại học Quốc Gia TP.HCM"),
@@ -197,15 +204,17 @@ def seed_database(connection: sqlite3.Connection) -> None:
         (3, "locked@example.com", "Locked User", "locked123", "customer", 1, 0),
     ]
 
-    connection.executemany("INSERT OR IGNORE INTO movies VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", movies)
+    connection.executemany("INSERT OR IGNORE INTO movies VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", movies)
     connection.executemany(
         """
         UPDATE movies
         SET title = ?, slug = ?, genre = ?, rating = ?, duration_minutes = ?, synopsis = ?,
-            cast = ?, visual_theme = ?, featured = ?
+            cast = ?, visual_theme = ?, featured = ?,
+            poster_url = COALESCE(poster_url, ?),
+            backdrop_url = COALESCE(backdrop_url, ?)
         WHERE id = ?
         """,
-        [(title, slug, genre, rating, duration, synopsis, cast, theme, featured, movie_id) for movie_id, title, slug, genre, rating, duration, synopsis, cast, theme, featured in movies],
+        [(title, slug, genre, rating, duration, synopsis, cast, theme, featured, poster, backdrop, movie_id) for movie_id, title, slug, genre, rating, duration, synopsis, cast, theme, featured, poster, backdrop in movies],
     )
     connection.executemany("INSERT OR IGNORE INTO screens VALUES (?, ?, ?, ?, ?)", screens)
     connection.executemany(

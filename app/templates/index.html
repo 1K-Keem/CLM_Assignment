@@ -22,13 +22,19 @@
       <span><strong>5</strong> combo rạp phim</span>
     </div>
   </div>
-  <div class="hero-ticket" aria-label="Suất chiếu nổi bật">
-    {% if showtimes %}
+  {% set hero_showtime = (showtimes | selectattr("movie_title", "equalto", "Titanic") | list | first) if showtimes else None %}
+  {% set hero_showtime = hero_showtime if hero_showtime else (showtimes[0] if showtimes else None) %}
+  {% set hero_movie = (movies | selectattr("title", "equalto", hero_showtime["movie_title"]) | list | first) if hero_showtime else None %}
+  <div class="hero-ticket {% if hero_movie and hero_movie['poster_url'] %}has-image{% endif %}" aria-label="Suất chiếu nổi bật">
+    {% if hero_movie and hero_movie["poster_url"] %}
+    <span class="ticket-poster" style="background-image: url('{{ hero_movie['poster_url'] }}');"></span>
+    {% endif %}
+    {% if hero_showtime %}
     <span class="ticket-label">Suất chiếu nổi bật</span>
-    <strong>{{ showtimes[0]["movie_title"] }}</strong>
-    <span>{{ showtimes[0]["format"] }} · {{ showtimes[0]["screen_name"] }}</span>
-    <span>{{ showtimes[0]["starts_at"]|replace("T", " ") }}</span>
-    <a class="button primary full" href="/showtimes/{{ showtimes[0]['id'] }}/seats">Chọn ghế</a>
+    <strong>{{ hero_showtime["movie_title"] }}</strong>
+    <span>{{ hero_showtime["format"] }} · {{ hero_showtime["screen_name"] }}</span>
+    <span>{{ hero_showtime["starts_at"]|replace("T", " ") }}</span>
+    <a class="button primary full" href="/showtimes/{{ hero_showtime['id'] }}/seats">Chọn ghế</a>
     {% else %}
     <span class="ticket-label">Chưa có lịch chiếu</span>
     <strong>Lịch chiếu đang cập nhật</strong>

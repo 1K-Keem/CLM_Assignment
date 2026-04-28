@@ -108,7 +108,7 @@ main {
 .detail-hero,
 .auth-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.65fr);
+  grid-template-columns: minmax(0, 1.1fr) minmax(300px, 0.9fr);
   gap: 28px;
   align-items: stretch;
 }
@@ -134,7 +134,7 @@ main {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: clamp(30px, 6vw, 68px);
+  padding: clamp(26px, 5vw, 56px);
 }
 
 .hero-copy {
@@ -150,8 +150,12 @@ main {
 .auth-copy h1 {
   max-width: 820px;
   margin: 0;
-  font-size: clamp(2.35rem, 6.8vw, 5.8rem);
-  line-height: 0.96;
+  font-size: clamp(2.1rem, 5.2vw, 4.6rem);
+  line-height: 1.02;
+}
+
+.hero .summary {
+  font-size: 1rem;
 }
 
 .summary {
@@ -252,11 +256,43 @@ main {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  min-height: 390px;
+  position: relative;
+  overflow: hidden;
+  min-height: 360px;
   padding: 28px;
   background:
     linear-gradient(155deg, rgba(255, 207, 90, 0.28), rgba(240, 90, 40, 0.3)),
     rgba(255, 247, 237, 0.07);
+}
+
+.hero-ticket.has-image {
+  background: rgba(14, 9, 8, 0.62);
+}
+
+.hero-ticket::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(165deg, rgba(8, 6, 5, 0.08) 0%, rgba(8, 6, 5, 0.62) 58%, rgba(8, 6, 5, 0.92) 100%);
+  pointer-events: none;
+}
+
+.hero-ticket > * {
+  position: relative;
+  z-index: 2;
+}
+
+.ticket-poster {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: saturate(1.05) contrast(1.02);
+  opacity: 0.56;
+  transform: scale(1.06);
 }
 
 .ticket-label {
@@ -272,7 +308,7 @@ main {
 
 .hero-ticket strong {
   margin-bottom: 12px;
-  font-size: clamp(2rem, 5vw, 3.7rem);
+  font-size: clamp(1.8rem, 4.2vw, 3.2rem);
   line-height: 1;
 }
 

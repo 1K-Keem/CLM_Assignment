@@ -512,6 +512,18 @@ def release_hold(hold_id: str, session_id: str) -> list[str]:
         return [row["seat_code"] for row in rows]
 
 
+def fetch_hold_showtime_id(hold_id: str, session_id: str) -> Optional[int]:
+    ids = [int(value) for value in hold_id.split(",") if value.strip().isdigit()]
+    if not ids:
+        return None
+    with get_connection() as connection:
+        row = connection.execute(
+            f"SELECT showtime_id FROM seat_holds WHERE id IN ({','.join('?' for _ in ids)}) AND session_id = ? ORDER BY id LIMIT 1",
+            (*ids, session_id),
+        ).fetchone()
+        return int(row["showtime_id"]) if row else None
+
+
 def confirm_booking(hold_id: str, session_id: str, user_id: int, addons: Iterable[str], idempotency_key: str) -> tuple[str, dict]:
     expire_old_holds()
     ids = [int(value) for value in hold_id.split(",") if value.strip().isdigit()]

@@ -2,6 +2,7 @@ from datetime import datetime, timezone
 import asyncio
 import time
 import uuid
+from typing import Optional
 
 from fastapi import FastAPI, Form, HTTPException, Request, Response
 from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
@@ -17,6 +18,7 @@ from app.database import (
     expire_old_holds,
     fetch_booking,
     fetch_booking_seats,
+    fetch_hold_showtime_id,
     fetch_movie,
     fetch_movies,
     fetch_seats_for_showtime,
@@ -79,6 +81,12 @@ def parse_csv(value: str) -> list[str]:
     return [item.strip() for item in value.split(",") if item.strip()]
 
 
+def booking_flow_id(session_id: str, showtime_id: Optional[int] = None, hold_id: str = "") -> str:
+    if showtime_id is not None:
+        return f"flow_{uuid.uuid5(uuid.NAMESPACE_URL, f'{session_id}:{showtime_id}').hex[:16]}"
+    return f"flow_{uuid.uuid5(uuid.NAMESPACE_URL, f'{session_id}:{hold_id}').hex[:16]}"
+
+
 @app.middleware("http")
 async def request_context(request: Request, call_next):
     started = time.perf_counter()
@@ -116,6 +124,8 @@ async def request_context(request: Request, call_next):
     if request.url.path != "/health":
         if status_code == 404:
             log_event("endpoint_not_found", "request", level="WARN", ip=ip, method=request.method, path=request.url.path, status_code=status_code, latency_ms=latency_ms, message="Endpoint not found")
+        elif 400 <= status_code < 500:
+            log_event("request_rejected", "request", level="WARN", ip=ip, method=request.method, path=request.url.path, status_code=status_code, latency_ms=latency_ms, message="Request rejected")
         elif status_code >= 500:
             log_event("request_failed", "request", level="ERROR", ip=ip, method=request.method, path=request.url.path, status_code=status_code, latency_ms=latency_ms, message="Request failed")
         else:
@@ -175,13 +185,14 @@ def showtime_seats(showtime_id: int, request: Request) -> HTMLResponse:
     showtime = fetch_showtime(showtime_id)
     if showtime is None:
         raise HTTPException(status_code=404, detail="Showtime not found")
+    flow_id = booking_flow_id(request.state.session_id, showtime_id)
     for hold in expire_old_holds():
-        log_event("seat_hold_expired", "hold", showtime_id=hold["showtime_id"], seat_id=hold["seat_id"], reason="expired", message="Seat hold expired")
+        log_event("seat_hold_expired", "hold", showtime_id=hold["showtime_id"], booking_flow_id=booking_flow_id(request.state.session_id, hold["showtime_id"]), seat_id=hold["seat_id"], reason="expired", message="Seat hold expired")
     seats = fetch_seats_for_showtime(showtime_id, request.state.session_id)
-    log_event("seatmap_viewed", "seat", showtime_id=showtime_id, hall_id=showtime["screen_id"], message="Seat map viewed")
+    log_event("seatmap_viewed", "seat", showtime_id=showtime_id, hall_id=showtime["screen_id"], booking_flow_id=flow_id, message="Seat map viewed")
     changed = [seat["seat_code"] for seat in seats if seat["status"] in {"held", "held_by_you", "booked"}]
     if changed:
-        log_event("seat_status_changed_while_viewing", "seat", level="WARN", showtime_id=showtime_id, hall_id=showtime["screen_id"], seat_ids=changed[:8], reason="held_or_booked", message="Seat status changed while viewing")
+        log_event("seat_status_changed_while_viewing", "seat", level="WARN", showtime_id=showtime_id, hall_id=showtime["screen_id"], booking_flow_id=flow_id, seat_ids=changed[:8], reason="held_or_booked", message="Seat status changed while viewing")
     addons = [
         {"key": "popcorn", "name": "Popcorn", "price_vnd": 55000},
         {"key": "coke", "name": "Coke", "price_vnd": 30000},
@@ -251,14 +262,15 @@ async def hold_seats(showtime_id: int, request: Request) -> JSONResponse:
     seat_ids = parse_csv(str(data.get("seat_ids", "")))
     addons = parse_csv(str(data.get("addons", "")))
     expire_seconds = int(data.get("expire_seconds")) if data.get("expire_seconds") else None
-    log_event("seat_hold_requested", "hold", user_id=user["id"], showtime_id=showtime_id, seat_ids=seat_ids, message="Seat hold requested")
+    flow_id = booking_flow_id(request.state.session_id, showtime_id)
+    log_event("seat_hold_requested", "hold", user_id=user["id"], showtime_id=showtime_id, booking_flow_id=flow_id, seat_ids=seat_ids, message="Seat hold requested")
     for seat in seat_ids:
-        log_event("seat_selected", "seat", user_id=user["id"], showtime_id=showtime_id, seat_id=seat, message="Seat selected")
+        log_event("seat_selected", "seat", user_id=user["id"], showtime_id=showtime_id, booking_flow_id=flow_id, seat_id=seat, message="Seat selected")
     for addon in addons:
-        log_event("concession_added", "concession", user_id=user["id"], showtime_id=showtime_id, message=f"Concession added: {addon}")
+        log_event("concession_added", "concession", user_id=user["id"], showtime_id=showtime_id, booking_flow_id=flow_id, message=f"Concession added: {addon}")
     status, payload = create_hold(showtime_id, seat_ids, request.state.session_id, user["id"], expire_seconds)
     if status == "success":
-        log_event("seat_hold_success", "hold", user_id=user["id"], showtime_id=showtime_id, seat_ids=payload["seat_ids"], amount=payload["amount"], currency="VND", message="Seat hold created")
+        log_event("seat_hold_success", "hold", user_id=user["id"], showtime_id=showtime_id, booking_flow_id=flow_id, seat_ids=payload["seat_ids"], amount=payload["amount"], currency="VND", message="Seat hold created")
         return JSONResponse({"status": "success", **payload})
     event = {
         "booked": "seat_hold_failed_already_booked",
@@ -266,11 +278,11 @@ async def hold_seats(showtime_id: int, request: Request) -> JSONResponse:
         "double_hold": "double_hold_attempt_detected",
     }.get(status, "booking_failed")
     category = "hold" if event.startswith("seat_hold") or event.startswith("double") else "booking"
-    log_event(event, category, level="WARN", user_id=user["id"], showtime_id=showtime_id, seat_ids=payload.get("seat_ids"), reason=payload.get("reason"), message=payload.get("message"))
+    log_event(event, category, level="WARN", user_id=user["id"], showtime_id=showtime_id, booking_flow_id=flow_id, seat_ids=payload.get("seat_ids"), reason=payload.get("reason"), message=payload.get("message"))
     if status == "booked":
-        log_event("already_booked_seat_selected", "seat", level="WARN", user_id=user["id"], showtime_id=showtime_id, seat_ids=payload.get("seat_ids"), reason="already_booked", message="Booked seat selected")
+        log_event("already_booked_seat_selected", "seat", level="WARN", user_id=user["id"], showtime_id=showtime_id, booking_flow_id=flow_id, seat_ids=payload.get("seat_ids"), reason="already_booked", message="Booked seat selected")
     if status == "held":
-        log_event("held_by_other_seat_selected", "seat", level="WARN", user_id=user["id"], showtime_id=showtime_id, seat_ids=payload.get("seat_ids"), reason="already_held", message="Seat held by another session")
+        log_event("held_by_other_seat_selected", "seat", level="WARN", user_id=user["id"], showtime_id=showtime_id, booking_flow_id=flow_id, seat_ids=payload.get("seat_ids"), reason="already_held", message="Seat held by another session")
     return JSONResponse({"status": "error", **payload}, status_code=409)
 
 
@@ -291,20 +303,23 @@ async def confirm_booking_route(request: Request) -> JSONResponse:
     hold_id = str(data.get("hold_id", ""))
     addons = parse_csv(str(data.get("addons", "")))
     idempotency_key = str(data.get("idempotency_key") or f"idem_{uuid.uuid4().hex[:12]}")
-    log_event("booking_requested", "booking", user_id=user["id"], message="Booking requested")
+    showtime_id = fetch_hold_showtime_id(hold_id, request.state.session_id)
+    flow_id = booking_flow_id(request.state.session_id, showtime_id, hold_id)
+    log_event("booking_requested", "booking", user_id=user["id"], showtime_id=showtime_id, booking_flow_id=flow_id, message="Booking requested")
     status, payload = confirm_booking(hold_id, request.state.session_id, user["id"], addons, idempotency_key)
     if status == "success":
-        log_event("booking_created", "booking", user_id=user["id"], booking_id=payload["booking_id"], showtime_id=payload["showtime_id"], seat_ids=payload["seat_ids"], amount=payload["amount"], currency="VND", message="Booking record created")
-        log_event("booking_confirmed", "booking", user_id=user["id"], booking_id=payload["booking_id"], showtime_id=payload["showtime_id"], seat_ids=payload["seat_ids"], amount=payload["amount"], currency="VND", message="Booking confirmed")
-        log_event("booking_success", "booking", user_id=user["id"], booking_id=payload["booking_id"], amount=payload["amount"], currency="VND", message="Booking succeeded")
-        log_event("concession_checkout_summary", "concession", user_id=user["id"], booking_id=payload["booking_id"], amount=payload["amount"], currency="VND", message="Concession checkout summary")
+        flow_id = booking_flow_id(request.state.session_id, payload["showtime_id"])
+        log_event("booking_created", "booking", user_id=user["id"], booking_id=payload["booking_id"], showtime_id=payload["showtime_id"], booking_flow_id=flow_id, seat_ids=payload["seat_ids"], amount=payload["amount"], currency="VND", message="Booking record created")
+        log_event("booking_confirmed", "booking", user_id=user["id"], booking_id=payload["booking_id"], showtime_id=payload["showtime_id"], booking_flow_id=flow_id, seat_ids=payload["seat_ids"], amount=payload["amount"], currency="VND", message="Booking confirmed")
+        log_event("booking_success", "booking", user_id=user["id"], booking_id=payload["booking_id"], showtime_id=payload["showtime_id"], booking_flow_id=flow_id, amount=payload["amount"], currency="VND", message="Booking succeeded")
+        log_event("concession_checkout_summary", "concession", user_id=user["id"], booking_id=payload["booking_id"], showtime_id=payload["showtime_id"], booking_flow_id=flow_id, amount=payload["amount"], currency="VND", message="Concession checkout summary")
         return JSONResponse({"status": "success", **payload})
     event = {
         "duplicate": "duplicate_booking_request_detected",
         "expired": "booking_failed_hold_expired",
         "conflict": "booking_failed_seat_conflict",
     }.get(status, "booking_failed")
-    log_event(event, "booking", level="WARN", user_id=user["id"], reason=payload.get("reason"), booking_id=payload.get("booking_id"), message=payload.get("message"))
+    log_event(event, "booking", level="WARN", user_id=user["id"], showtime_id=showtime_id, booking_flow_id=flow_id, reason=payload.get("reason"), booking_id=payload.get("booking_id"), message=payload.get("message"))
     return JSONResponse({"status": "error", **payload}, status_code=409)
 
 

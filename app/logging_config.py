@@ -34,6 +34,7 @@ def log_event(event: str, category: str, level: str = "INFO", **fields: Any) -> 
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "level": level,
         "service": SERVICE,
+        "env": ENVIRONMENT,
         "environment": ENVIRONMENT,
         "event": event,
         "category": category,
@@ -44,4 +45,4 @@ def log_event(event: str, category: str, level: str = "INFO", **fields: Any) -> 
     payload.update({key: value for key, value in fields.items() if value is not None})
     path = LOG_DIR / LOG_FILES.get(category, "app.log")
     with path.open("a", encoding="utf-8") as handle:
-        handle.write(json.dumps(payload, ensure_ascii=True, separators=(",", ":")) + "\n")
+        handle.write(json.dumps(payload, ensure_ascii=False, separators=(",", ":")) + "\n")

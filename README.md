@@ -80,7 +80,7 @@ Sau khi chạy, mở:
 ## Chạy stack quan sát log
 
 Grafana, Loki và Alloy được cấu hình bằng Docker Compose trong thư mục `infra/`.
-
+Mở Docker Desktop và chạy lệnh sau trong terminal:
 ```bash
 cd infra
 docker compose up -d
@@ -89,7 +89,6 @@ docker compose up -d
 Sau khi chạy xong, truy cập:
 
 - Grafana: `http://localhost:3000`
-- Loki: `http://localhost:3100`
 
 > Lưu ý: stack này chỉ là tầng observability. Ứng dụng FastAPI vẫn chạy riêng bên ngoài Docker Compose.
 

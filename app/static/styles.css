@@ -607,6 +607,21 @@ main {
   box-shadow: 0 24px 70px rgba(0, 0, 0, 0.38);
 }
 
+.movie-detail-cau-to-va-thanh-xuan {
+  align-items: stretch;
+}
+
+.movie-detail-cau-to-va-thanh-xuan .detail-poster {
+  width: 100%;
+  max-width: none;
+  align-self: stretch;
+  aspect-ratio: auto;
+}
+
+.movie-detail-cau-to-va-thanh-xuan .detail-poster img {
+  object-fit: contain;
+}
+
 .movie-detail-info {
   display: flex;
   min-height: 560px;

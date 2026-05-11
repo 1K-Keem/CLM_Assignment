@@ -22,7 +22,7 @@
       <span><strong>5</strong> combo rạp phim</span>
     </div>
   </div>
-  {% set hero_showtime = (showtimes | selectattr("movie_title", "equalto", "Titanic") | list | first) if showtimes else None %}
+  {% set hero_showtime = (showtimes | selectattr("movie_title", "equalto", "Cậu, Tớ Và Thanh Xuân") | list | first) if showtimes else None %}
   {% set hero_showtime = hero_showtime if hero_showtime else (showtimes[0] if showtimes else None) %}
   {% set hero_movie = (movies | selectattr("title", "equalto", hero_showtime["movie_title"]) | list | first) if hero_showtime else None %}
   <div class="hero-ticket {% if hero_movie and hero_movie['poster_url'] %}has-image{% endif %}" aria-label="Suất chiếu nổi bật">
